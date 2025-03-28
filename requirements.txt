@@ -1,0 +1,16 @@
+torch
+PyPDF2
+docling
+jsonschema
+neo4j 
+python-dotenv
+text2term
+spacy
+textblob
+sentence-transformers
+rdflib
+neo4j-driver
+rdflib-neo4j
+langchain_openai
+langchain_community
+langchain-core

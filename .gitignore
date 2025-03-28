@@ -1,0 +1,14 @@
+.env
+/data
+reference
+venv-*
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite
+*.egg-info
+*.egg
+*.whl
+*.log
