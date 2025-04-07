@@ -1,4 +1,5 @@
 from language_model.chat_openai_schema import create_openai_schema
+from language_model.chat_openai_extract import extract_openai_entities
 from config.config import DEPLOYMENT
 
 
@@ -28,7 +29,7 @@ def client_selector(task_name, documents):
     elif task_name == "entity_extraction":
         if DEPLOYMENT in openai_models:
             try:
-                response = str(e)
+                response = extract_openai_entities(documents)
             except Exception as e:
                 print(e)
         elif DEPLOYMENT in open_source_models:
