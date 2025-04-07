@@ -13,21 +13,18 @@ The **Table2FAIR_KG** module expects tables as input data and finally constructs
     ```
 
 ## Functionality
-- schema construction:
+- document collection -> schema construction:
   - definition of levels for Component-Level (data/schema/levels.json)
-  - iterative schema construction based on levels.json and .csv tables
-- common vocabulary mapping:
-  - uses UMLS from US Medicine Language System
-  - maps each term to UMLS vocabulary
-  - compares terms
-  - Problem: some terms are not mapped correctly, no semantic context used
-  - Try: LLM for context-aware mapping
+  - iterative keyword extraction based on levels.json and .csv tables
+  - saving as schema.json
+  - creation of a unified vocabulary based on keywords
+  - map schema keys to vocabulary, save updated schema
+- schema -> extracted entities:
+  - use LLM for extraction, fill schema
 - ontology mapping:
   - use ontology from mapped vocabulary/find new ontology
   - ontology based on values of tables
   - schema keys are mapped to UMLS vocabulary
-- entity extraction
-  - using LLM
 - embedding of entities
   - using some embedding model
 - relation extraction
@@ -35,7 +32,7 @@ The **Table2FAIR_KG** module expects tables as input data and finally constructs
   - cross-level
   - inner-level
   - inner-document
-- Todo: construct Document-Level nodes
+- Todo: construct Document-Level nodes based on full doc content
 - Integration:
   - integrate entities/relations as nodes/edges into neo4j
   - Test integration using SHACL
