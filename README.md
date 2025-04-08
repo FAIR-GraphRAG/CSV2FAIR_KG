@@ -21,6 +21,18 @@ The **Table2FAIR_KG** module expects tables as input data and finally constructs
   - map schema keys to vocabulary, save updated schema
 - schema -> extracted entities:
   - use LLM for extraction, fill schema
+- adding metadata
+  - use geofetch to fetch GEO metadata
+  - metadata is available in PEP format
+  - PEP contains _GSE.soft for the experiment and _GSM.soft for the individual samples 
+  - For testing I used: GSE244832 and GSE280797
+  - GSE244832 is available as .bed (biomedical format) and also as processed files
+  - Problem: the sample metadata can't be assigned to specific rows
+  - Solution: 
+    - define mandatory metadata for row/component level, save the rest in document level
+    - use of Dublin Core Metadata Elements standard
+    - use LLM to map fill dublin schema with information from _GSE.soft
+    - rest of metadata are saved in Document-Level FAIR DO
 - ontology mapping:
   - use ontology from mapped vocabulary/find new ontology
   - ontology based on values of tables
