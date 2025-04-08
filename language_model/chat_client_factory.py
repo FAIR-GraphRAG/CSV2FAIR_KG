@@ -1,5 +1,6 @@
 from language_model.chat_openai_schema import create_openai_schema
 from language_model.chat_openai_extract import extract_openai_entities
+from language_model.chat_openai_metadata import extract_openai_metadata
 from config.config import DEPLOYMENT
 
 
@@ -35,4 +36,16 @@ def client_selector(task_name, documents):
         elif DEPLOYMENT in open_source_models:
             # DUMMY
             response = str(e)
+    elif task_name == "metadata_extraction":
+        if DEPLOYMENT in openai_models:
+            try:
+                response = extract_openai_metadata(documents)
+            except Exception as e:
+                print(e)
+        elif DEPLOYMENT in open_source_models:
+            # DUMMY
+            response = str(e)
+    else:
+        print(f'Task name "{task_name}" not found.')
+        return None
     return response
