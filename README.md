@@ -12,47 +12,90 @@ The **Table2FAIR_KG** module expects tables as input data and finally constructs
     python3 -m pip install -r requirements.txt
     ```
 
-## Functionality
-- document collection -> schema construction:
-  - definition of levels for Component-Level (data/schema/levels.json)
-  - iterative keyword extraction based on levels.json and .csv tables
-  - saving as schema.json
-  - creation of a unified vocabulary based on keywords
-  - map schema keys to vocabulary, save updated schema
-- schema -> extracted entities:
-  - use LLM for extraction, fill schema
-- adding metadata
-  - use geofetch to fetch GEO metadata
-  - metadata is available in PEP format
-  - PEP contains _GSE.soft for the experiment and _GSM.soft for the individual samples 
-  - For testing I used: GSE244832 and GSE280797
-  - GSE244832 is available as .bed (biomedical format) and also as processed files
-  - Problem: the sample metadata can't be assigned to specific rows
-  - Solution: 
-    - define mandatory metadata for row/component level, save the rest in document level
-    - use of Dublin Core Metadata Elements standard
-    - use LLM to map fill dublin schema with information from _GSE.soft
-    - rest of metadata are saved in Document-Level FAIR DO
-- ontology mapping:
-  - use ontology from mapped vocabulary/find new ontology
-  - ontology based on values of tables
-  - schema keys are mapped to UMLS vocabulary
-- embedding of entities
-  - using some embedding model
-- relation extraction
-  - based on embeddings
-  - cross-level
-  - inner-level
-  - inner-document
-- Todo: construct Document-Level nodes based on full doc content
-- Integration:
-  - integrate entities/relations as nodes/edges into neo4j
-  - Test integration using SHACL
-  - Add user interface using neoconverse (use built-in solution)
-  - Try/evaluate complete RAG system
+
+## Pipeline Overview
+
+This section describes the stages of the system.
+
+---
+
+### 1. Document Collection to Schema
+
+- **Component-Level Definition:**  
+  - Define components in Component-Level in `data/schema/levels.json`.
+  - Iteratively extract keywords using `levels.json` and `.csv` tables.
+  - Save schema as `schema.json`.
+
+- **Unified Vocabulary Creation:**  
+  - Build a unified vocabulary from the extracted keywords.
+  - Map schema keys to the vocabulary and update the schema accordingly.
+
+---
+
+### 2. Schema to Extracted Entities
+
+- **Entity Extraction:**  
+  - Leverage LLM to perform extraction based on the schema.
+  - Fill the schema with the extracted entities.
+
+---
+
+### 3. Extracted Entities to FAIR DO Entities
+
+- **Metadata Enrichment:**  
+  - **GEO Metadata:**  
+    - Retrieve geographical metadata using `geofetch`.
+    - Metadata is available in the PEP format, including `_GSE.soft` for experiments and `_GSM.soft` for individual samples.
+    - Testing was performed with datasets: **GSE244832** and **GSE280797**.
+  - **Additional Data Formats:**  
+    - **GSE244832:** Provided as both biomedical `.bed` files and processed file formats.
+  - **Challenges and Solutions:**  
+    - **Problem:** Sample metadata cannot be directly assigned to specific rows.
+    - **Solution:**  
+      - Define mandatory metadata at the row/component level; store the remainder at the document level.
+      - Utilize the Dublin Core Metadata Elements standard.
+      - Employ an LLM to enrich the Dublin schema with information from `_GSE.soft`.
+      - Save remaining metadata at the Document-Level FAIR DO.
+
+- **Ontology Mapping:**  
+  - Map schema keys to the UMLS vocabulary.
+  - Integrate additional or new ontology based on the mapped vocabulary and table values.
+
+---
+
+### 4. FAIR DO Entities to FAIR DO Entities & Relations
+
+- **Embedding of Entities:**  
+  - Generate embeddings using an embedding model.
+- **Relation Extraction:**  
+  - Extract relations based on the generated embeddings.
+  - Perform extraction across multiple levels:
+    - Cross-level
+    - Inner-level
+    - Inner-document
+
+---
+
+### 5. FAIR DO Entities & Relations to FAIR Knowledge Graph
+
+- **Graph Integration:**  
+  - Integrate entities (nodes) and relations (edges) into a Neo4j knowledge graph.
+  - Validate integration using SHACL tests.
+
+---
+
+### Todos
+
+- **Document-Level Nodes:**  
+  - Construct Document-Level nodes that encapsulate full document content
 
 
-## Legal
-- Use of UML Metathesaurus from National Library of Medicine (NLM)
-- Version: 2024-01-08
-- TODO: look-up correct citation
+## Legal Notice
+
+This project utilizes data from the [Unified Medical Language System (UMLS) Metathesaurus](https://www.nlm.nih.gov/research/umls/) provided by the [National Library of Medicine (NLM)](https:/www.nlm.nih.gov/). 
+
+**Version:** 2024-01-08
+
+Use of the UMLS Metathesaurus is governed by the [UMLS Knowledge Sources Terms of Use](https://www.nlm.nih.gov/databases/download/terms_and_conditions.html). All users must comply with these terms and provide the correct attribution as specified in the official guidelines.
+
+For the most up-to-date citation information, please consult the NLM documentation.
