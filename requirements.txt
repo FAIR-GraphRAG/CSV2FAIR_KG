@@ -14,3 +14,8 @@ rdflib-neo4j
 langchain_openai
 langchain_community
 langchain-core
+fastapi
+uvicorn
+pydantic
+jinja2
+python-multipart
