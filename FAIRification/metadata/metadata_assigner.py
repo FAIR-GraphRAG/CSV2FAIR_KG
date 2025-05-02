@@ -1,4 +1,5 @@
 """
+- NOT IN USE (up to now, component metadata do not differ from dataset metadata)
 - Assigns metadata to Component-Level FAIR DOs
 - Each Component-Level is assigned with the tables minimal metadata
 """
@@ -22,7 +23,7 @@ def assign_metadata():
                 metadata = read_json(metadata_path)
 
                 # Add metadata to each study object
-                properties = schema_data.get("level_1", {}).get("properties", {})
+                properties = schema_data.get("properties", {})
                 for obj in properties.values():
                     obj["metadata"] = metadata
 
