@@ -16,10 +16,9 @@ os.environ["AZURE_OPENAI_API_KEY"] = AZURE_OPENAI_API_KEY
 
 def get_initial_template():
     initial_template = """
-    You are provided with the first two rows of a biomedical table and a set of predefined levels.
-    Predefined levels: {levels}
+    You are provided with the first two rows of a biomedical table and should generate a JSON dataset object.
 
-    Generate a JSON schema such that for level 2, you create an object with the following structure:
+    Generate a JSON object with the following structure:
     {initial_schema_study_object}
     The list of objects contains the json object of the object of study (such as gene, cell) that is described in the biomedical table below.
     For the object of study, you create an object with the following structure:
@@ -46,8 +45,8 @@ def get_refine_template():
     {page_content}
 
     Try to identify the object of study (such as cell, gene) in the
-    table above and if it already exists in the properties of level 2, add it's properties to the existing object. 
-    If the object of study is not in the properties of level 2, create a new object with the following structure:
+    table above and if it already exists in the properties, add it's properties to the existing object. 
+    If the object of study is not in the properties , create a new object with the following structure:
     {initial_schema}.
     Do not remove any existing keys. Ensure that the output remains valid JSON and follows 
     the same structure as before. Follow the instructions.\n{format_instructions}.
@@ -67,7 +66,7 @@ def get_parser():
         class Config:
             populate_by_name = True
 
-    class LevelSchema(BaseModel):
+    class DatasetSchema(BaseModel):
         # Use an alias for "$schema" since it's not a valid Python identifier
         schema_: str = Field(..., alias="$schema")
         title: str
@@ -78,15 +77,8 @@ def get_parser():
             populate_by_name = True
 
     class FlexibleSchema(BaseModel):
-        """
-        This model can hold an arbitrary number of levels
-        (e.g., 'level 1', 'level 2', 'level 3', ...), each
-        of which is parsed into a `LevelSchema`.
 
-        The __root__ field is a "catch-all" for keys at the top level.
-        """
-
-        output_schema: dict[str, LevelSchema]
+        output_schema: DatasetSchema
 
     # Set up parser
     parser = JsonOutputParser(pydantic_object=FlexibleSchema)
@@ -96,10 +88,6 @@ def get_parser():
 def create_openai_schema(documents: List[Document]):
     # Instantiate your LLM
     llm = get_openai_llm()
-
-    # --- Load Predefined Levels ---
-    with open("data/schema/levels.json", "r") as f:
-        levels = json.load(f)
 
     # --- Load Initial Template ---
     with open("data/schema/initial_schema.json", "r") as f:
@@ -115,7 +103,6 @@ def create_openai_schema(documents: List[Document]):
         input_variables=["page_content"],
         template=initial_template,
         partial_variables={
-            "levels": json.dumps(levels),
             "format_instructions": parser.get_format_instructions(),
             "initial_schema": json.dumps(initial_schema["initial_schema"]),
             "initial_schema_study_object": json.dumps(
