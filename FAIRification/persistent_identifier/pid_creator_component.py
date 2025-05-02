@@ -22,9 +22,9 @@ def get_uri(section_key, doc_num):
     return f"{base_URI}{section_key.replace(' ', '_')}/r{doc_num}/{generate_random_sequence(3)}"
 
 
-def get_pid_urn(dataset_id, title):
+def get_pid_urn(dataset_pid):
     pid = shortuuid.uuid()
-    return pid, f"urn:{title.lower()}:{dataset_id}/{pid}"
+    return pid, f"urn:{dataset_pid}/{pid}"
 
 
 def add_pid_to_json(folder_path):
@@ -46,9 +46,7 @@ def add_pid_to_json(folder_path):
                     ) in data.items():  # $schema, title, properties
                         if subkey == "properties":
                             for prop_key, prop_value in subvalue.items():
-                                new_pid, new_urn = get_pid_urn(
-                                    filename.split(".")[0], prop_value["title"]
-                                )
+                                new_pid, new_urn = get_pid_urn(data.get("pid"))
                                 print(new_urn)
                                 new_value = {
                                     "pid": new_pid,
