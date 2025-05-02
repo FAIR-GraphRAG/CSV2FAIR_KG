@@ -34,18 +34,17 @@ def write_properties(properties, ontology_schema, out_f):
 
 
 def enrich_and_stream_write(file_path, data, ontology_schema):
-    level_1 = data.get("level_1", {})
-    properties = level_1.get("properties", {})
+    properties = data.get("properties", {})
 
     # Prepare non-properties metadata
     enriched_metadata = {
-        key: level_1[key]
+        key: data[key]
         for key in ["pid", "metadata", "$schema", "title", "description"]
-        if key in level_1
+        if key in data
     }
 
     with open(file_path, "w") as out_f:
-        out_f.write('{\n  "level_1": {\n')
+        out_f.write("{\n")
 
         # Write metadata
         meta_items = [
@@ -58,7 +57,7 @@ def enrich_and_stream_write(file_path, data, ontology_schema):
         write_properties(properties, ontology_schema, out_f)
 
         # Close JSON structure
-        out_f.write("\n    }\n  }\n}")
+        out_f.write("\n    }\n  }")
 
 
 def enrich_with_ontology(data_path, schema_path):
