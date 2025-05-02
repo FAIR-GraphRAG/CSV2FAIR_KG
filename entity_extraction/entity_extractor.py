@@ -29,7 +29,7 @@ def extract_entities():
     """
     data_dir = "data/hepatic"
     csv_dir = "csv_data"
-    output_dir = "data/extracted_data/"
+    output_dir = "data/extracted_data/filled_schema/"
 
     # Load (header + first row) for table-level semantic extraction
     sample_documents = find_docs_in_folder(csv_dir, data_dir)
@@ -42,7 +42,7 @@ def extract_entities():
     table_documents = find_docs_in_folder(csv_dir, data_dir, cut_file=False)
 
     schema_copy = copy.deepcopy(base_schema)
-    schema_copy["level_1"]["properties"] = {}
+    schema_copy["properties"] = {}
 
     for i, table in enumerate(table_documents):
         table_name = f"table_{i + 1}"
@@ -50,9 +50,7 @@ def extract_entities():
         # Iterate through records
         for j, record in enumerate(table):
             object_study_name = table_semantics[i]["table"]
-            study_object_schema = base_schema["level_1"]["properties"][
-                object_study_name
-            ]
+            study_object_schema = base_schema["properties"][object_study_name]
 
             study_object_list = []
             if isinstance(study_object_schema["properties"], list):
@@ -69,7 +67,5 @@ def extract_entities():
                 "properties": study_object_list,
             }
             # Update filled schema
-            schema_copy["level_1"]["properties"][
-                f"{object_study_name}_{j}"
-            ] = table_study_object
+            schema_copy["properties"][f"{object_study_name}_{j}"] = table_study_object
         save_json(f"{output_dir}{table_name}.json", schema_copy)
