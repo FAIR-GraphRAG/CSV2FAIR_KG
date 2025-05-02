@@ -9,11 +9,13 @@ async def dataset_page():
     return "Hello, World!"
 
 
-@app.get("/ds/{dataset_id}")
-async def dataset_page(dataset_id: str, request: Request):
-    return await dataset_landing(dataset_id, request)
+@app.get("/{namespace}/{dataset_id}")
+async def dataset_page(namespace: str, dataset_id: str):
+    full_id = f"{namespace}/{dataset_id}"
+    return await dataset_landing(full_id)
 
 
-@app.get("/ds/{dataset_id}/{research_obj_id}")
-async def research_obj_page(dataset_id: str, research_obj_id: str, request: Request):
-    return await research_obj_landing(dataset_id, research_obj_id, request)
+@app.get("/{namespace}/{dataset_id}/{research_obj_id}")
+async def research_obj_page(namespace: str, dataset_id: str, research_obj_id: str):
+    full_id = f"{namespace}/{dataset_id}"
+    return await research_obj_landing(full_id, research_obj_id)
