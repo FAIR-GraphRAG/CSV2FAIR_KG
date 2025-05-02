@@ -1,7 +1,7 @@
 """
 - From folder metadata_PEP extract _GSE.soft and _GSM.soft
 - Feed _GSE.soft (experiment metadata) to the LLM factory
-- LLM extracts metadata for Component-Level FAIR DOs
+- LLM extracts metadata for Dataset-Level FAIR DOs
 - Save metadata in json file
 """
 
