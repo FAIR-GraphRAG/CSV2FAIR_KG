@@ -9,6 +9,7 @@
 
 ## Datasets
 * Register metadata with [Zenodo Sandbox](https://sandbox.zenodo.org/)
+* Find full API documentation (works also for Sandbox): https://developers.zenodo.org/#representation22
 * Create a dataset DOI at one of these services
 * The DOI resolves to a landing page (hosted by me), which:
   * Describes the dataset
