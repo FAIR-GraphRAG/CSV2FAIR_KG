@@ -16,6 +16,8 @@ async def dataset_page(namespace: str, dataset_id: str):
 
 
 @app.get("/{namespace}/{dataset_id}/{research_obj_id}")
-async def research_obj_page(namespace: str, dataset_id: str, research_obj_id: str):
+async def research_obj_page(
+    request: Request, namespace: str, dataset_id: str, research_obj_id: str
+):
     full_id = f"{namespace}/{dataset_id}"
-    return await research_obj_landing(full_id, research_obj_id)
+    return await research_obj_landing(full_id, research_obj_id, request)
