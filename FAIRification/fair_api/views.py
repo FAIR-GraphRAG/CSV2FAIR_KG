@@ -27,14 +27,23 @@ async def dataset_landing(dataset_id: str):
     return JSONResponse(content=data, media_type="application/json")
 
 
-async def research_obj_landing(dataset_id: str, research_obj_id: str):
+async def research_obj_landing(dataset_id: str, research_obj_id: str, request: Request):
     filename = find_matching_json_file(dataset_id)
     metadata = read_json(path_metadata + filename)
     data = read_json(path_research_obj.format(filename=filename))
+
     # Check if research_obj_id exists in data
     item = [v for v in data["properties"].values() if v.get("pid") == research_obj_id]
     if item:
         modified_item = item[0]
         modified_item["properties"] = ""
-        obj_metadata = {**modified_item, "dataset": metadata}
+
+        namespace, dataset_short_id = dataset_id.split("/", 1)
+        dataset_url = str(
+            request.url_for(
+                "dataset_page", namespace=namespace, dataset_id=dataset_short_id
+            )
+        )
+
+        obj_metadata = {**modified_item, "dataset_url": dataset_url}
         return JSONResponse(content=obj_metadata, media_type="application/json")
