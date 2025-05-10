@@ -1,6 +1,7 @@
 from language_model.chat_openai_schema import create_openai_schema
 from language_model.chat_openai_extract import extract_openai_entities
 from language_model.chat_openai_metadata import extract_openai_metadata
+from language_model.chat_openai_identification import identify_openai_keys
 from config.config import DEPLOYMENT
 
 
@@ -42,6 +43,13 @@ def client_selector(task_name, documents):
                 response = extract_openai_metadata(documents)
             except Exception as e:
                 print(e)
+        elif DEPLOYMENT in open_source_models:
+            # DUMMY
+            response = str(e)
+    elif task_name == "inner_doc_relations":
+        if DEPLOYMENT in openai_models:
+            # DUMMY
+            response = identify_openai_keys(documents)
         elif DEPLOYMENT in open_source_models:
             # DUMMY
             response = str(e)
