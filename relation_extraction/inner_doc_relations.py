@@ -31,29 +31,22 @@ def create_vectors(data, relevant_keys):
     for section in data.get("properties", {}).values():
         pid = section.get("pid")
         if pid is None:
-            # Skip malformed sections – no PID ⇒ cannot be referenced later
             continue
 
         section_props = section.get("properties", {})
-        vector = [
-            section_props.get(k, {}).get("value")  # value if present
-            for k in relevant_keys
-        ]
+        vector = [section_props.get(k, {}).get("value") for k in relevant_keys]
         vectors[pid] = vector
 
     return vectors
 
 
-# --------------------------------------------------------------------------- #
-#  Fast bucket‑based similarity (same as last version, but new output format) #
-# --------------------------------------------------------------------------- #
 def compare_vectors(
     filename: str,
     vectors: Dict[str, List[str]],
     similarity_threshold: float = 0.8,
 ) -> Dict[str, List[str]]:
     """
-    Very fast relation finder that stores results like
+    Relation finder that stores results like
 
         "relations": [
             {
@@ -71,7 +64,6 @@ def compare_vectors(
     data = read_json(file_path)
     properties = data.get("properties", {})
 
-    # ---------- 1.  build aligned lists ---------------------------------- #
     prop_keys: List[str] = list(properties.keys())  # order is preserved
     pid_list: List[str] = []  # idx → pid
     vec_list: List[Tuple] = []  # idx → tuple(vector)
@@ -83,20 +75,17 @@ def compare_vectors(
         pid_list.append(pid)
         vec_list.append(tuple(vectors[pid]))  # tuple = hashable
 
-    if not pid_list:  # nothing to do
+    if not pid_list:
         return {}
 
     n_features = len(vec_list[0])
     min_matches = max(1, int((similarity_threshold * n_features) + 0.9999))
 
-    # ---------- 2.  bucket rows by the min‑match fields ------------------- #
-    # For threshold 0.8 and three features this == the full tuple.
     buckets: Dict[Tuple, List[int]] = {}
     for idx, vec in enumerate(vec_list):
         key = vec[:min_matches] if min_matches < n_features else vec
         buckets.setdefault(key, []).append(idx)
 
-    # ---------- 3.  compare only inside buckets --------------------------- #
     relations_written: Dict[str, List[str]] = {}
 
     for bucket_idxs in buckets.values():
@@ -122,9 +111,6 @@ def compare_vectors(
     return relations_written
 
 
-# --------------------------------------------------------------------------- #
-#  Helper: append one directed relation object to a section                   #
-# --------------------------------------------------------------------------- #
 def _write_relation(section: dict, node1: str, node2: str, sim: float) -> None:
     rel_obj = {
         "node1": node1,
