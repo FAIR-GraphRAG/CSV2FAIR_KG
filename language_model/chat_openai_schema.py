@@ -3,15 +3,48 @@ import json
 from langchain_core.documents import Document
 from langchain.chains import LLMChain, RefineDocumentsChain
 from langchain_core.prompts import PromptTemplate
-from config.config import AZURE_ENDPOINT, AZURE_OPENAI_API_KEY, AZURE_API_VERSION
+from config.config import (
+    AZURE_ENDPOINT,
+    AZURE_OPENAI_API_KEY,
+    AZURE_API_VERSION,
+    DEPLOYMENT_NAME,
+)
 from langchain_core.output_parsers import JsonOutputParser
 from typing import List
 from pydantic import BaseModel, Field
-from language_model.shared import postprocess, get_openai_llm
+from language_model.shared import postprocess, get_openai_llm, get_open_source_llm
 
 # Set environment variables for Azure OpenAI
 os.environ["AZURE_OPENAI_ENDPOINT"] = AZURE_ENDPOINT
 os.environ["AZURE_OPENAI_API_KEY"] = AZURE_OPENAI_API_KEY
+
+
+class ObjectSchema(BaseModel):
+    schema_: str = Field(..., alias="$schema")
+    title: str
+    description: str
+    properties: List[str]
+
+    class Config:
+        populate_by_name = True
+
+
+class DatasetSchema(BaseModel):
+    schema_: str = Field(..., alias="$schema")
+    title: str
+    description: str
+    properties: dict[str, ObjectSchema]
+
+    class Config:
+        populate_by_name = True
+
+
+class FlexibleSchema(BaseModel):
+    output_schema: DatasetSchema
+
+
+def get_parser():
+    return JsonOutputParser(pydantic_object=FlexibleSchema)
 
 
 def get_initial_template():
@@ -19,10 +52,10 @@ def get_initial_template():
     You are provided with the first two rows of a biomedical table and should generate a JSON dataset object.
 
     Generate a JSON object with the following structure:
-    {initial_schema_study_object}
+    {initial_schema_wrapper}
     The list of objects contains the json object of the object of study (such as gene, cell) that is described in the biomedical table below.
     For the object of study, you create an object with the following structure:
-    {initial_schema}
+    {initial_schema_object}
 
     Biomedical Table:
     {page_content}
@@ -31,6 +64,8 @@ def get_initial_template():
     {example_schema}
 
     Generate the JSON schema accordingly. Follow the instructions.\n{format_instructions}.
+    **Output must be ONLY the final JSON, with no extra explanation.**
+
     """
     return initial_template
 
@@ -47,47 +82,21 @@ def get_refine_template():
     Try to identify the object of study (such as cell, gene) in the
     table above and if it already exists in the properties, add it's properties to the existing object. 
     If the object of study is not in the properties , create a new object with the following structure:
-    {initial_schema}.
+    {initial_schema_object}.
     Do not remove any existing keys. Ensure that the output remains valid JSON and follows 
     the same structure as before. Follow the instructions.\n{format_instructions}.
+    **Output must be ONLY the final JSON, with no extra explanation.**
+
     """
     return refine_template
 
 
-def get_parser():
-    # Definition of data structures
-    class ObjectSchema(BaseModel):
-        # Use an alias for "$schema" since it's not a valid Python identifier
-        schema_: str = Field(..., alias="$schema")
-        title: str
-        description: str
-        properties: List[str]
-
-        class Config:
-            populate_by_name = True
-
-    class DatasetSchema(BaseModel):
-        # Use an alias for "$schema" since it's not a valid Python identifier
-        schema_: str = Field(..., alias="$schema")
-        title: str
-        description: str
-        properties: dict[str, ObjectSchema]
-
-        class Config:
-            populate_by_name = True
-
-    class FlexibleSchema(BaseModel):
-
-        output_schema: DatasetSchema
-
-    # Set up parser
-    parser = JsonOutputParser(pydantic_object=FlexibleSchema)
-    return parser
-
-
 def create_openai_schema(documents: List[Document]):
     # Instantiate your LLM
-    llm = get_openai_llm()
+    if DEPLOYMENT_NAME == "Llama-3.3-70B-Instruct":
+        llm = get_open_source_llm()
+    else:
+        llm = get_openai_llm()
 
     # --- Load Initial Template ---
     with open("data/schema/initial_schema.json", "r") as f:
@@ -104,9 +113,11 @@ def create_openai_schema(documents: List[Document]):
         template=initial_template,
         partial_variables={
             "format_instructions": parser.get_format_instructions(),
-            "initial_schema": json.dumps(initial_schema["initial_schema"]),
-            "initial_schema_study_object": json.dumps(
-                initial_schema["initial_schema_study_object"]
+            "initial_schema_object": json.dumps(
+                initial_schema["initial_schema_object"]
+            ),
+            "initial_schema_wrapper": json.dumps(
+                initial_schema["initial_schema_wrapper"]
             ),
             "example_schema": json.dumps(initial_schema["example_schema"]),
         },
@@ -121,7 +132,9 @@ def create_openai_schema(documents: List[Document]):
         template=refine_template,
         partial_variables={
             "format_instructions": parser.get_format_instructions(),
-            "initial_schema": json.dumps(initial_schema["initial_schema"]),
+            "initial_schema_object": json.dumps(
+                initial_schema["initial_schema_object"]
+            ),
         },
     )
     refine_chain = LLMChain(llm=llm, prompt=refine_prompt)
@@ -142,15 +155,17 @@ def create_openai_schema(documents: List[Document]):
     result = refine_documents_chain.invoke(documents)
 
     raw_output = result["output_text"]
-
+    print("RAW", raw_output)
     json_text = postprocess(raw_output)
-
     # Optionally, verify that the output is valid JSON
     try:
         refined_schema = json.loads(json_text)
         print("\nParsed JSON Schema:")
-        print(json.dumps(refined_schema["output_schema"], indent=4))
-        return refined_schema["output_schema"]
+        if DEPLOYMENT_NAME == "Llama-3.3-70B-Instruct":
+            return refined_schema
+        else:
+            print(json.dumps(refined_schema["output_schema"], indent=4))
+            return refined_schema["output_schema"]
     except Exception as e:
         print("postprocessed json_text:", json_text)
         print("Error parsing JSON:", e)
