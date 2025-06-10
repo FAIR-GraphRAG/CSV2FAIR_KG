@@ -1,147 +1,110 @@
 import os
-import itertools
-from typing import Dict, List, Tuple
-
-from utils.helper import read_json, save_json, extract_list
-from language_model.chat_client_factory import client_selector
+from utils.helper import read_json, save_json
 
 JSON_DIR = "data/extracted_data/filled_schema"
 
 
-def get_key_values(data):
-    # Get the keys and values from the first research study object
-    if not data or "properties" not in data or not data["properties"]:
-        return {}
-
-    # Grab the *first* study object (ordering in Py ≥3.7 is guaranteed)
-    first_section = next(iter(data["properties"].values()), {})
-    nested_props = first_section.get("properties", {})
-
-    # Flatten to {key: value}
-    return {
-        prop_key: prop_dict.get("value")
-        for prop_key, prop_dict in nested_props.items()
-        if isinstance(prop_dict, dict) and "value" in prop_dict
-    }
-
-
-def create_vectors(data, relevant_keys):
-    vectors: Dict[str, List[str]] = {}
-
-    for section in data.get("properties", {}).values():
-        pid = section.get("pid")
-        if pid is None:
-            continue
-
-        section_props = section.get("properties", {})
-        vector = [section_props.get(k, {}).get("value") for k in relevant_keys]
-        vectors[pid] = vector
-
-    return vectors
-
-
-def compare_vectors(
-    filename: str,
-    vectors: Dict[str, List[str]],
-    similarity_threshold: float = 0.8,
-) -> Dict[str, List[str]]:
-    """
-    Relation finder that stores results like
-
-        "relations": [
-            {
-              "node1": "<pid_i>",
-              "relation_label": "similar_values",
-              "similarity": "1.00",
-              "node2": "<pid_j>"
-            },
-            ...
-        ]
-
-    Two *directed* objects are written ( i→j and j→i ) so look‑ups stay simple.
-    """
-    file_path = os.path.join(JSON_DIR, filename)
-    data = read_json(file_path)
-    properties = data.get("properties", {})
-
-    prop_keys: List[str] = list(properties.keys())  # order is preserved
-    pid_list: List[str] = []  # idx → pid
-    vec_list: List[Tuple] = []  # idx → tuple(vector)
-
-    for k in prop_keys:
-        pid = properties[k].get("pid")
-        if pid not in vectors:
-            continue
-        pid_list.append(pid)
-        vec_list.append(tuple(vectors[pid]))  # tuple = hashable
-
-    if not pid_list:
-        return {}
-
-    n_features = len(vec_list[0])
-    min_matches = max(1, int((similarity_threshold * n_features) + 0.9999))
-
-    buckets: Dict[Tuple, List[int]] = {}
-    for idx, vec in enumerate(vec_list):
-        key = vec[:min_matches] if min_matches < n_features else vec
-        buckets.setdefault(key, []).append(idx)
-
-    relations_written: Dict[str, List[str]] = {}
-
-    for bucket_idxs in buckets.values():
-        if len(bucket_idxs) < 2:
-            continue
-
-        for i, j in itertools.combinations(bucket_idxs, 2):
-            vec_i, vec_j = vec_list[i], vec_list[j]
-
-            matches = sum(1 for x, y in zip(vec_i, vec_j) if x == y)
-            similarity = matches / n_features
-            if similarity < similarity_threshold:
-                continue
-
-            pid_i, pid_j = pid_list[i], pid_list[j]
-            _write_relation(properties[prop_keys[i]], pid_i, pid_j, similarity)
-            _write_relation(properties[prop_keys[j]], pid_j, pid_i, similarity)
-
-            relations_written.setdefault(pid_i, []).append(pid_j)
-            relations_written.setdefault(pid_j, []).append(pid_i)
-
-    save_json(file_path, data)
-    return relations_written
-
-
-def _write_relation(section: dict, node1: str, node2: str, sim: float) -> None:
-    rel_obj = {
-        "node1": node1,
-        "relation_label": "similar_values",
-        "similarity": f"{sim:.2f}",
-        "node2": node2,
-    }
+def _append_relation(section: dict, rel_obj: dict):
     section.setdefault("relations", []).append(rel_obj)
 
 
+def _split_values(raw_val: str) -> set[str]:
+    """
+    Given a raw string (possibly containing "//"-separated entries),
+    split on "//", strip whitespace, and return a set of non-empty tokens.
+    """
+    if not isinstance(raw_val, str):
+        return set()
+    parts = [p.strip() for p in raw_val.split("//")]
+    return {p for p in parts if p}
+
+
+def add_entity_links(data, first_type_name):
+    # Collect entities by their type prefix (e.g. "gene", "GO-BP", etc.)
+    entities_by_type: dict[str, list[dict]] = {}
+    for key, section in data.get("properties", {}).items():
+        entity_type = key.split("_", 1)[0]
+        entities_by_type.setdefault(entity_type, []).append(section)
+
+    if first_type_name not in entities_by_type:
+        return
+
+    # For each first-type entity (e.g. each "gene_X")
+    for first_section in entities_by_type[first_type_name]:
+        first_pid = first_section.get("pid")
+        first_props = first_section.get("properties", {})
+
+        # Build a set of all atomic values in the first entity
+        first_values_atoms: set[str] = set()
+        for v_dict in first_props.values():
+            if isinstance(v_dict, dict) and "value" in v_dict:
+                raw = v_dict["value"]
+                first_values_atoms.update(_split_values(raw))
+
+        # For each other entity type
+        for other_type, other_entities in entities_by_type.items():
+            if other_type == first_type_name:
+                continue
+
+            for other_section in other_entities:
+                other_pid = other_section.get("pid")
+                other_props = other_section.get("properties", {})
+
+                # Build a set of all atomic values in the other entity
+                other_values_atoms: set[str] = set()
+                for v_dict in other_props.values():
+                    if isinstance(v_dict, dict) and "value" in v_dict:
+                        raw = v_dict["value"]
+                        other_values_atoms.update(_split_values(raw))
+
+                # If any atomic token overlaps, create a relation
+                if first_values_atoms & other_values_atoms:
+                    rel_obj = {
+                        "node1": first_pid,
+                        "relation_label": f"HAS_{other_type.replace('-', '_').upper()}",
+                        "node2": other_pid,
+                    }
+                    _append_relation(first_section, rel_obj)
+
+                    # Optional reverse relation:
+                    # rel_obj_rev = {
+                    #     "node1": other_pid,
+                    #     "relation_label": f"IS_{other_type.replace('-', '_').upper()}_OF",
+                    #     "node2": first_pid,
+                    # }
+                    # _append_relation(other_section, rel_obj_rev)
+
+
+def add_belongs_to(data):
+    dataset_pid = data.get("pid", "")
+    for section in data.get("properties", {}).values():
+        pid = section.get("pid")
+        if not pid:
+            continue
+        rel_obj = {
+            "node1": pid,
+            "relation_label": "belongs_to",
+            "node2": dataset_pid,
+        }
+        _append_relation(section, rel_obj)
+
+
 def find_relations():
-    """
-    For each file in json_folder:
-      1) Load the data as json
-      2) Paste the properties to LLM and get the relevant ones for similarity back
-      3) Use pid and relevant properties
-      4) For the relevant properties, create a vector
-      5) Compare the vectors for each pair of entries
-      6) Save similar vectors with their pid in this format:
-         - <pid_of_section_i, belongs_to_same_doc_as, pid_of_section_j>
-         - <pid_of_section_j, belongs_to_same_doc_as, pid_of_section_i>
+    # Read the top‐level schema in order to identify the "first type"
+    schema_path = "data/schema/schema.json"
+    from utils.helper import read_json as read_json_schema
 
-    """
+    schema = read_json_schema(schema_path)
+    first_type_name = list(schema["properties"].keys())[0]
+
     for filename in os.listdir(JSON_DIR):
-        if filename.endswith(".json"):
-            file_path = os.path.join(JSON_DIR, filename)
-            data = read_json(file_path)
-            key_values = get_key_values(data)
-            relevant_keys = client_selector("inner_doc_relations", key_values)
-            processed_keys = extract_list(relevant_keys)
+        if not filename.endswith(".json"):
+            continue
+        file_path = os.path.join(JSON_DIR, filename)
+        data = read_json(file_path)
 
-            vectors = create_vectors(data, processed_keys)
-            relations = compare_vectors(filename, vectors)
-            print(f"Relations written for {filename}: {relations}")
+        add_entity_links(data, first_type_name=first_type_name)
+        add_belongs_to(data)
+
+        save_json(file_path, data)
+        print(f"Linked entities in {filename}")
