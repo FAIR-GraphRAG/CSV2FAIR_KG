@@ -1,10 +1,10 @@
 import os
 import json
 from langchain_core.prompts import PromptTemplate
-from config.config import AZURE_ENDPOINT, AZURE_OPENAI_API_KEY
+from config.config import AZURE_ENDPOINT, AZURE_OPENAI_API_KEY, DEPLOYMENT_NAME
 from langchain_core.output_parsers import JsonOutputParser
 from pydantic import BaseModel
-from language_model.shared import get_openai_llm
+from language_model.shared import get_openai_llm, get_open_source_llm
 from utils.helper import read_json
 from typing import Optional
 
@@ -50,7 +50,10 @@ def get_parser():
 
 
 def extract_openai_metadata(document):
-    llm = get_openai_llm()
+    if DEPLOYMENT_NAME == "Llama-3.3-70B-Instruct":
+        llm = get_open_source_llm()
+    else:
+        llm = get_openai_llm()
 
     initial_template = get_initial_template()
 

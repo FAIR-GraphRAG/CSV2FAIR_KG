@@ -2,20 +2,36 @@ import glob
 import os
 import re
 from langchain_openai import AzureChatOpenAI
-from config.config import AZURE_API_VERSION
-
-azure_deployment = "gpt-4o-mini"
+from config.config import (
+    AZURE_API_VERSION,
+    AZURE_OPEN_SOURCE_ENDPOINT,
+    AZURE_OPEN_SOURCE_KEY,
+    DEPLOYMENT_NAME,
+)
+from langchain_azure_ai.chat_models import AzureAIChatCompletionsModel
 
 
 def get_openai_llm():
     # Instantiate your LLM
     llm = AzureChatOpenAI(
-        azure_deployment=azure_deployment,
+        azure_deployment=DEPLOYMENT_NAME,
         api_version=AZURE_API_VERSION,
         temperature=0,
         max_tokens=None,
         timeout=None,
         max_retries=2,
+    )
+    return llm
+
+
+def get_open_source_llm():
+    llm = AzureAIChatCompletionsModel(
+        endpoint=AZURE_OPEN_SOURCE_ENDPOINT,
+        credential=AZURE_OPEN_SOURCE_KEY,
+        model=DEPLOYMENT_NAME,
+        max_tokens=1024,
+        temperature=0.0,
+        streaming=False,
     )
     return llm
 
