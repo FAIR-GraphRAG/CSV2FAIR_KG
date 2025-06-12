@@ -27,7 +27,7 @@ def get_pid_urn(dataset_pid):
     return pid, f"urn:{dataset_pid}/{pid}"
 
 
-def add_pid_to_json(folder_path):
+def add_pid_to_json():
     if not os.path.isdir(folder_path):
         print(f"Error: Folder '{folder_path}' does not exist.")
         return
@@ -65,4 +65,4 @@ def add_pid_to_json(folder_path):
 
 
 if __name__ == "__main__":
-    add_pid_to_json(folder_path)
+    add_pid_to_json()
