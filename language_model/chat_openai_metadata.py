@@ -15,14 +15,15 @@ os.environ["AZURE_OPENAI_API_KEY"] = AZURE_OPENAI_API_KEY
 
 def get_initial_template():
     initial_template = """
-    You are provided with a document and a json schema.
+    You get a metadata file and you have to decide if it is metadata for my samples or for my whole dataset/series.
 
-    Please fill the json schema with the information from the document.
+    - If the metadata contains information on one or multiple samples in more detail, create an object with the key "sample" and include each key just once with one corresponding value
+    - If the metadata describes the dataset, create an object with the key "dataset" and include each key just once with one corresponding value
+
     Document:
     {page_content}
-    JSON Schema:
-    {schema}
-    Please ensure that the JSON schema is valid and follows the structure provided in the document.
+
+    Ensure that the resulting JSON schema is valid and adheres to the structure outlined in the document.
     """
     return initial_template
 
@@ -58,18 +59,25 @@ def extract_openai_metadata(document):
     initial_template = get_initial_template()
 
     initial_prompt = PromptTemplate(
-        input_variables=["page_content", "schema"],
+        input_variables=["page_content", "schema_dublin_core", "schema"],
         template=initial_template,
     )
 
-    schema = read_json("data/schema/component-level_metadata.json")
+    schema_dublin_core = read_json("data/schema/component-level_metadata.json")
+    schema = read_json("data/schema/ontology_schema.json")
 
     parser = get_parser()
 
     chain = initial_prompt | llm | parser
 
     try:
-        result = chain.invoke({"page_content": document, "schema": schema})
+        result = chain.invoke(
+            {
+                "page_content": document,
+                "schema_dublin_core": schema_dublin_core,
+                "schema": schema,
+            }
+        )
         print("\nParsed JSON Schema:")
         print(json.dumps(result, indent=4))
         return result
