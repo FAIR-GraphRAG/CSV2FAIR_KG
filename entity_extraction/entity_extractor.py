@@ -1,71 +1,77 @@
-"""
-- Prerequisites: constructed schema
-- Goal: fill schema for each table
-- Process:
-1. Iterate over each table
-2. Hand over table and schema to LLM
-3. Instruct LLM to find semantic meaning
-4. Programmatically fill schema based on semantic meaning
-"""
-
 from utils.helper import find_docs_in_folder, read_json, save_json
-from language_model.chat_client_factory import client_selector
 import copy
 
 
 def extract_field(document, field_name):
-    content = getattr(document, "page_content", document)
-    for line in content.splitlines():
-        if line.startswith(f"{field_name}:"):
-            return line.split(":", 1)[1].strip()
-    return None
+    if hasattr(document, "page_content"):
+        content = document.page_content
+        for line in content.splitlines():
+            if line.startswith(f"{field_name}:"):
+                return line.split(":", 1)[1].strip()
+        return None
+    return document.get(field_name, None)
 
 
 def extract_entities():
-    """
-    - For each table create a filled schema using its semantic meaning (see table_semantics)
-    - For each table row create one study object using the row values, assuming the header (first row) defines the property names
-    - The filled schema maintains the main structure as the original base schema
-    """
+    # For each table row fill each schema object by extracting information using matching property keys
+    # If values include separators (e.g., //) then split and create separate entities if it is not the full row entity class
+    # For each table fill one schema that maintains the main structure as the original base schema
     data_dir = "data/hepatic"
     csv_dir = "csv_data"
     output_dir = "data/extracted_data/filled_schema/"
 
-    # Load (header + first row) for table-level semantic extraction
-    sample_documents = find_docs_in_folder(csv_dir, data_dir)
-    # Example expected output from LLM: [{'table': 'Gene'}, ...]
-    table_semantics = client_selector("entity_extraction", sample_documents)
-
     base_schema = read_json("data/schema/schema.json")
-
-    # Load full table documents (all rows)
     table_documents = find_docs_in_folder(csv_dir, data_dir, cut_file=False)
 
-    schema_copy = copy.deepcopy(base_schema)
-    schema_copy["properties"] = {}
+    # List all types in order as per schema
+    all_types = list(base_schema["properties"].keys())
+    first_type = all_types[0]
 
     for i, table in enumerate(table_documents):
         table_name = f"table_{i + 1}"
 
-        # Iterate through records
-        for j, record in enumerate(table):
-            object_study_name = table_semantics[i]["table"]
-            study_object_schema = base_schema["properties"][object_study_name]
+        filled_schema = {
+            "$schema": base_schema["$schema"],
+            "title": base_schema["title"],
+            "description": base_schema["description"],
+            "properties": {},
+        }
+        type_counters = {k: 0 for k in base_schema["properties"].keys()}
 
-            study_object_list = []
-            if isinstance(study_object_schema["properties"], list):
-                for entry in study_object_schema["properties"]:
-                    list_match = extract_field(record, entry)
-                    if list_match:
-                        study_object_list.append({entry: list_match})
+        for record in table:
+            for obj_type, obj_schema in base_schema["properties"].items():
+                obj_props = obj_schema["properties"]
+                property_list = []
+                for prop in obj_props:
+                    val = extract_field(record, prop)
+                    if val is not None:
+                        if obj_type != first_type and "//" in val:
+                            # Split for all but the first type
+                            split_values = [
+                                v.strip() for v in val.split("//") if v.strip()
+                            ]
+                            for idx, split_val in enumerate(split_values):
+                                # key format: type_counter is 2 digits, e.g., GO-BP_00, GO-BP_01
+                                key = f"{obj_type}_{type_counters[obj_type]:02d}"
+                                type_counters[obj_type] += 1
+                                filled_schema["properties"][key] = {
+                                    "$schema": obj_schema["$schema"],
+                                    "title": obj_schema["title"],
+                                    "description": obj_schema["description"],
+                                    "properties": [{prop: split_val}],
+                                }
+                        else:
+                            property_list.append({prop: val})
 
-            # Create new study object
-            table_study_object = {
-                "$schema": study_object_schema["$schema"],
-                "title": study_object_schema["title"],
-                "description": study_object_schema["description"],
-                "properties": study_object_list,
-            }
-            # Update filled schema
-            schema_copy["properties"][f"{object_study_name}_{j}"] = table_study_object
-        save_json(f"{output_dir}{table_name}.json", schema_copy)
+                # Only add if there are properties and it's the first type,
+                # or if it's not the first type and splitting was not needed
+                if property_list and obj_type == first_type:
+                    key = f"{obj_type}_{type_counters[obj_type]}"
+                    type_counters[obj_type] += 1
+                    filled_schema["properties"][key] = {
+                        "$schema": obj_schema["$schema"],
+                        "title": obj_schema["title"],
+                        "description": obj_schema["description"],
+                        "properties": property_list,
+                    }
+        save_json(f"{output_dir}{table_name}.json", filled_schema)
