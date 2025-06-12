@@ -42,7 +42,7 @@ def load_docs(report_folder, cut_file=True):
                     documents.append(data[0])  # Append the header + first row
                 else:
                     documents.append(data)  # Append all rows
-        elif filename.endswith("_GSE.soft"):  # GEO soft file
+        elif filename.endswith(".soft"):  # GEO soft file
             file_path = os.path.join(report_folder, filename)
             with open(file_path, "r") as file:
                 lines = file.readlines()
