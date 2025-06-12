@@ -1,8 +1,13 @@
 """
+Old:
 - From folder metadata_PEP extract _GSE.soft and _GSM.soft
 - Feed _GSE.soft (experiment metadata) to the LLM factory
 - LLM extracts metadata for Dataset-Level FAIR DOs
 - Save metadata in json file
+New:
+- From folder "metadata_PEP"  extract _GSE.soft and _GSM.soft
+- Create separate metadata JSON files for document and entity node
+- Use domain-specific metadata format of file, if available, else fill backup metadata schema and add uncovered entries ("data/extracted_data/metadata/")
 """
 
 from language_model.chat_client_factory import client_selector
@@ -15,11 +20,26 @@ def extract_metadata():
     output_path = "data/extracted_data/metadata/"
 
     documents = find_docs_in_folder(metadata_dir, data_dir)
+    dataset_counter = 1
+    sample_counter = 1
     for i, doc in enumerate(documents):
         response = client_selector("metadata_extraction", doc)
         # Save the schema
         if response:
             try:
-                save_json(output_path + f"table_{i+1}.json", response)
+                if response.get("dataset"):
+                    save_json(
+                        f"{output_path}dataset_{dataset_counter}.json",
+                        response.get("dataset"),
+                    )
+                    dataset_counter += 1
+                elif response.get("sample"):
+                    save_json(
+                        f"{output_path}sample_{sample_counter}.json",
+                        response.get("sample"),
+                    )
+                    sample_counter += 1
+                else:
+                    print("Wrong format:", response)
             except Exception as e:
                 print("Error in create_initial_schema:", e)
