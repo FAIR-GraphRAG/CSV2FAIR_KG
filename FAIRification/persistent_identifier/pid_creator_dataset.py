@@ -58,14 +58,19 @@ def request_zenodo_doi(metadata):
 
 def update_with_doi():
     for i, filename in enumerate(sorted(os.listdir(dataset_metadata_dir))):
-        if filename.endswith(".json"):
+        if filename.startswith("dataset") and filename.endswith(".json"):
             file_path = os.path.join(dataset_metadata_dir, filename)
             try:
                 metadata = read_json(file_path)
 
                 doi = request_zenodo_doi(metadata)
-                # Also update dataset json with DOI, assume same file names (table_1.json, table_2.json)
-                dataset_json_path = os.path.join(dataset_dir, filename)
+
+                # --- Updated filename logic here ---
+                # dataset_X.json → table_X.json
+                table_filename = filename.replace("dataset_", "table_")
+                dataset_json_path = os.path.join(dataset_dir, table_filename)
+                # -----------------------------------
+
                 json_data = read_json(dataset_json_path)
                 update_json_data = {
                     "pid": doi,
