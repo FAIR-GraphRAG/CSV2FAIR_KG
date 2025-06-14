@@ -12,3 +12,4 @@ __pycache__
 *.egg
 *.whl
 *.log
+language_model/neo4j.py
