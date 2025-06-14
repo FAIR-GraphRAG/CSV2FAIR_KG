@@ -19,11 +19,23 @@ def _split_values(raw_val: str) -> set[str]:
     return {p for p in parts if p}
 
 
+def _normalize_properties(props):
+    """
+    Normalize properties to a dictionary, handling list-based formats.
+    """
+    if isinstance(props, list):
+        return {k: {"value": v} for d in props for k, v in d.items()}
+    elif isinstance(props, dict):
+        return props
+    return {}
+
+
 def add_entity_links(data, first_type_name):
     # Collect entities by their type prefix (e.g. "gene", "GO-BP", etc.)
     entities_by_type: dict[str, list[dict]] = {}
     for key, section in data.get("properties", {}).items():
         entity_type = key.split("_", 1)[0]
+        section["__key"] = key  # store the object key for linking
         entities_by_type.setdefault(entity_type, []).append(section)
 
     if first_type_name not in entities_by_type:
@@ -31,8 +43,8 @@ def add_entity_links(data, first_type_name):
 
     # For each first-type entity (e.g. each "gene_X")
     for first_section in entities_by_type[first_type_name]:
-        first_pid = first_section.get("pid")
-        first_props = first_section.get("properties", {})
+        first_key = first_section.get("__key")
+        first_props = _normalize_properties(first_section.get("properties", {}))
 
         # Build a set of all atomic values in the first entity
         first_values_atoms: set[str] = set()
@@ -47,8 +59,8 @@ def add_entity_links(data, first_type_name):
                 continue
 
             for other_section in other_entities:
-                other_pid = other_section.get("pid")
-                other_props = other_section.get("properties", {})
+                other_key = other_section.get("__key")
+                other_props = _normalize_properties(other_section.get("properties", {}))
 
                 # Build a set of all atomic values in the other entity
                 other_values_atoms: set[str] = set()
@@ -60,31 +72,28 @@ def add_entity_links(data, first_type_name):
                 # If any atomic token overlaps, create a relation
                 if first_values_atoms & other_values_atoms:
                     rel_obj = {
-                        "node1": first_pid,
+                        "node1": first_key,
                         "relation_label": f"HAS_{other_type.replace('-', '_').upper()}",
-                        "node2": other_pid,
+                        "node2": other_key,
                     }
                     _append_relation(first_section, rel_obj)
 
                     # Optional reverse relation:
                     # rel_obj_rev = {
-                    #     "node1": other_pid,
+                    #     "node1": other_key,
                     #     "relation_label": f"IS_{other_type.replace('-', '_').upper()}_OF",
-                    #     "node2": first_pid,
+                    #     "node2": first_key,
                     # }
                     # _append_relation(other_section, rel_obj_rev)
 
 
 def add_belongs_to(data):
-    dataset_pid = data.get("pid", "")
-    for section in data.get("properties", {}).values():
-        pid = section.get("pid")
-        if not pid:
-            continue
+    dataset_key = data.get("title", "Dataset")
+    for obj_key, section in data.get("properties", {}).items():
         rel_obj = {
-            "node1": pid,
+            "node1": obj_key,
             "relation_label": "belongs_to",
-            "node2": dataset_pid,
+            "node2": dataset_key,
         }
         _append_relation(section, rel_obj)
 
