@@ -24,7 +24,7 @@ def assign_metadata():
             if os.path.exists(dataset_meta_path):
                 metadata = read_json(dataset_meta_path)
                 # If you want pid here too (add if needed)
-                schema_data["properties"]["metadata"] = metadata
+                schema_data["metadata"] = metadata
 
             # For sample_X.json: add to each second-level properties object and include pid
             sample_meta_path = os.path.join(metadata_dir, f"sample_{num}.json")
