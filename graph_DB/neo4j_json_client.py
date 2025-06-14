@@ -145,12 +145,4 @@ def insert_data(json_glob=JSON_GLOB):
                         rel.get("node2"),
                     )
 
-                session.write_transaction(
-                    upsert_rel,
-                    obj_pid,
-                    "belongs_to",
-                    "",
-                    dataset_pid,
-                )
-
     driver.close()
