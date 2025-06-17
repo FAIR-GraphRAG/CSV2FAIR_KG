@@ -9,6 +9,7 @@ from utils.helper import save_json, find_docs_in_folder
 
 
 def extract_metadata(metadata_dir, data_dir, output_path):
+    print(output_path)
     documents = find_docs_in_folder(metadata_dir, data_dir)
     dataset_counter = 1
     sample_counter = 1
@@ -19,13 +20,13 @@ def extract_metadata(metadata_dir, data_dir, output_path):
             try:
                 if response.get("dataset"):
                     save_json(
-                        f"{output_path}dataset_{dataset_counter}.json",
+                        f"{output_path}/dataset_{dataset_counter}.json",
                         response.get("dataset"),
                     )
                     dataset_counter += 1
                 elif response.get("sample"):
                     save_json(
-                        f"{output_path}sample_{sample_counter}.json",
+                        f"{output_path}/sample_{sample_counter}.json",
                         response.get("sample"),
                     )
                     sample_counter += 1
