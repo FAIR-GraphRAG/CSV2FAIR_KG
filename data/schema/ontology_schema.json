@@ -1,0 +1,99 @@
+{
+  "gene": {
+    "value": "",
+    "ontology_term": "gene",
+    "ontology_name": "OCHV",
+    "ontology_link": "https://data.bioontology.org/ontologies/OCHV/classes/http%3A%2F%2Fsbmi.uth.tmc.edu%2Fontology%2Fochv%23C0017337"
+  },
+  "gene_id": {
+    "value": "",
+    "ontology_term": "id",
+    "ontology_name": "OCHV",
+    "ontology_link": "https://data.bioontology.org/ontologies/OCHV/classes/http%3A%2F%2Fsbmi.uth.tmc.edu%2Fontology%2Fochv%23C0600091"
+  },
+  "biotype": {
+    "value": "",
+    "ontology_term": "biotype",
+    "ontology_name": "OCHV",
+    "ontology_link": "https://data.bioontology.org/ontologies/OCHV/classes/http%3A%2F%2Fsbmi.uth.tmc.edu%2Fontology%2Fochv%23C0449562"
+  },
+  "strand": {
+    "value": "",
+    "ontology_term": "Strand",
+    "ontology_name": "COMO",
+    "ontology_link": "https://data.bioontology.org/ontologies/COMO/classes/http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCOMO_0000186"
+  },
+  "locus": {
+    "value": "",
+    "ontology_term": "Locus",
+    "ontology_name": "NCIT",
+    "ontology_link": "https://data.bioontology.org/ontologies/NCIT/classes/http%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23C45822"
+  },
+  "GroupB_FPKM": {
+    "value": "",
+    "ontology_term": "FPKM",
+    "ontology_name": "GBOL",
+    "ontology_link": "https://data.bioontology.org/ontologies/GBOL/classes/http%3A%2F%2Fgbol.life%2F0.1%2FFPKM"
+  },
+  "GroupA_FPKM": {},
+  "Fold change": {
+    "value": "",
+    "ontology_term": "Fold Change",
+    "ontology_name": "NCIT",
+    "ontology_link": "https://data.bioontology.org/ontologies/NCIT/classes/http%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23C60693"
+  },
+  "log2(fold change)": {},
+  "p_value": {
+    "value": "",
+    "ontology_term": "P_Value",
+    "ontology_name": "OGDI",
+    "ontology_link": "https://data.bioontology.org/ontologies/OGDI/classes/http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FODGI.owl%23P_Value"
+  },
+  "FDR": {},
+  "Regulation": {
+    "value": "",
+    "ontology_term": "regulation",
+    "ontology_name": "OCHV",
+    "ontology_link": "https://data.bioontology.org/ontologies/OCHV/classes/http%3A%2F%2Fsbmi.uth.tmc.edu%2Fontology%2Fochv%2350030"
+  },
+  "GeneID": {
+    "value": "",
+    "ontology_term": "Gene ID",
+    "ontology_name": "COMO",
+    "ontology_link": "https://data.bioontology.org/ontologies/COMO/classes/http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCOMO_0000224"
+  },
+  "Synonyms": {
+    "value": "",
+    "ontology_term": "synonyms",
+    "ontology_name": "OCHV",
+    "ontology_link": "https://data.bioontology.org/ontologies/OCHV/classes/http%3A%2F%2Fsbmi.uth.tmc.edu%2Fontology%2Fochv%23C0871468"
+  },
+  "dbXrefs": {},
+  "chromosome": {
+    "value": "",
+    "ontology_term": "chromosome",
+    "ontology_name": "OCHV",
+    "ontology_link": "https://data.bioontology.org/ontologies/OCHV/classes/http%3A%2F%2Fsbmi.uth.tmc.edu%2Fontology%2Fochv%23C0008633"
+  },
+  "map_location": {
+    "value": "",
+    "ontology_term": "location",
+    "ontology_name": "OCHV",
+    "ontology_link": "https://data.bioontology.org/ontologies/OCHV/classes/http%3A%2F%2Fsbmi.uth.tmc.edu%2Fontology%2Fochv%23C0450429"
+  },
+  "description": {
+    "value": "",
+    "ontology_term": "description",
+    "ontology_name": "OCHV",
+    "ontology_link": "https://data.bioontology.org/ontologies/OCHV/classes/http%3A%2F%2Fsbmi.uth.tmc.edu%2Fontology%2Fochv%23C0678257"
+  },
+  "pathway": {
+    "value": "",
+    "ontology_term": "Pathway",
+    "ontology_name": "NCIT",
+    "ontology_link": "https://data.bioontology.org/ontologies/NCIT/classes/http%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23C54214"
+  },
+  "GO-CC": {},
+  "GO-MF": {},
+  "GO-BP": {}
+}

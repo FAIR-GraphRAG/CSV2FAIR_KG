@@ -1,0 +1,30 @@
+{
+    "initial_schema_object": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Title",
+        "description": "Description",
+        "properties": [ "list of property keys extracted from the report (each key is a string with at most three words)" ]
+    },
+    "initial_schema_wrapper": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Title",
+        "description": "Description",
+        "properties": {"object_key_1": {}, "object_key_2": {}, "object_key_n": {}}
+    },
+    "example_schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Dataset",
+        "description": "Study object (such as patient, gene or cell) related information",
+        "properties": {
+            "cell": {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "title": "Cell",
+                "description": "Single-cell related information",
+                "properties": [
+                    "id",
+                    "name"
+                ]
+            }
+        }
+    }
+}

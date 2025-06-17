@@ -1,0 +1,86 @@
+{
+    "sample_id": [
+        "GSM8605905",
+        "GSM8605906",
+        "GSM8605907",
+        "GSM8605908",
+        "GSM8605909",
+        "GSM8605910",
+        "GSM8605911",
+        "GSM8605912"
+    ],
+    "sample_title": [
+        "dismal prognosis rep1",
+        "dismal prognosis rep2",
+        "dismal prognosis rep3",
+        "dismal prognosis rep4",
+        "better prognosis  rep1",
+        "better prognosis  rep2",
+        "better prognosis  rep3",
+        "better prognosis  rep4"
+    ],
+    "sample_geo_accession": [
+        "GSM8605905",
+        "GSM8605906",
+        "GSM8605907",
+        "GSM8605908",
+        "GSM8605909",
+        "GSM8605910",
+        "GSM8605911",
+        "GSM8605912"
+    ],
+    "sample_status": "Public on Nov 02 2024",
+    "sample_submission_date": "Oct 31 2024",
+    "sample_last_update_date": "Nov 02 2024",
+    "sample_type": "SRA",
+    "sample_channel_count": 1,
+    "sample_source_name_ch1": "Human bile",
+    "sample_organism_ch1": "Homo sapiens",
+    "sample_taxid_ch1": 9606,
+    "sample_characteristics_ch1": [
+        "tissue: Human bile",
+        "prognosis: dismal",
+        "prognosis: better"
+    ],
+    "sample_molecule_ch1": "total RNA",
+    "sample_extract_protocol_ch1": [
+        "Total RNA was used for removing the rRNAs with NEBNext rRNA Depletion Kit (New England Biolabs, Inc., Massachusetts, USA) following the manufacturer's instructions.",
+        "RNA libraries were constructed by using NEBNext® Ultra™ II Directional RNA Library Prep Kit (New England Biolabs, Inc., Massachusetts, USA) according to the manufacturer’s instructions. Libraries were controlled for quality and quantified using the BioAnalyzer 2100 system (Agilent Technologies, Inc., USA)."
+    ],
+    "sample_description": [
+        "B_1_sequence",
+        "B_2_sequence",
+        "B_3_sequence",
+        "B_4_sequence",
+        "A_1_sequence",
+        "A_2_sequence",
+        "A_3_sequence",
+        "A_4_sequence"
+    ],
+    "sample_data_processing": [
+        "Paired-end reads were harvested from Illumina HiSeq 4000 sequencer after quality filtering. Firstly, Q30 was used to perform quality control. After 3’ adaptor-trimming and low quality reads trimming by cutadapt software (v1.9.2), based on these high quality reads, CloudSeq used different softwares to analyse mRNAs. The high quality reads were aligned to the reference genome (UCSC hg19) guided by the Ensembl gtf gene annotation file with hisat2 software (v2.04). Then, cuffdiff software (part of cufflinks, v2.2.1) was used to get the fragments per kilobase of exon per million fragments mapped (FPRM) as the expression profiles of mRNA, and fold change and p-value were calculated based on FPKM, differentiallymRNA were identified. And GO and Pathway analysis were performed on these target genes. GO and Pathway enrichment analysis were also performed based on the differentially expressed mRNAs.",
+        "Assembly: UCSC hg19",
+        "Supplementary files format and content: The fragments per kilobase of exon per million fragments mapped (FPRM) as the expression profiles of mRNA were included."
+    ],
+    "sample_platform_id": "GPL20301",
+    "sample_contact_name": "Haizhen,,Du",
+    "sample_contact_email": "2111110621@stu.pku.edu.cn",
+    "sample_contact_phone": "17839914360",
+    "sample_contact_institute": "Peking University Cancer Hospital and Institute",
+    "sample_contact_address": "No.52 Fucheng Road, Haidian District",
+    "sample_contact_city": "Beijing",
+    "sample_contact_state": "Beijing",
+    "sample_contact_zip/postal_code": "100142",
+    "sample_contact_country": "China",
+    "sample_instrument_model": "Illumina HiSeq 4000",
+    "sample_library_selection": "cDNA",
+    "sample_library_source": "transcriptomic",
+    "sample_library_strategy": "RNA-Seq",
+    "sample_relation": [
+        "BioSample: https://www.ncbi.nlm.nih.gov/biosample/SAMN44522852",
+        "SRA: https://www.ncbi.nlm.nih.gov/sra?term=SRX26565181"
+    ],
+    "sample_supplementary_file_1": "NONE",
+    "sample_series_id": "GSE280797",
+    "sample_data_row_count": 0
+}
