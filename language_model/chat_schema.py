@@ -4,19 +4,12 @@ from langchain_core.documents import Document
 from langchain.chains import LLMChain, RefineDocumentsChain
 from langchain_core.prompts import PromptTemplate
 from config.config import (
-    AZURE_ENDPOINT,
-    AZURE_OPENAI_API_KEY,
-    AZURE_API_VERSION,
     DEPLOYMENT_NAME,
 )
 from langchain_core.output_parsers import JsonOutputParser
 from typing import List
 from pydantic import BaseModel, Field
 from language_model.shared import postprocess, get_openai_llm, get_open_source_llm
-
-# Set environment variables for Azure OpenAI
-os.environ["AZURE_OPENAI_ENDPOINT"] = AZURE_ENDPOINT
-os.environ["AZURE_OPENAI_API_KEY"] = AZURE_OPENAI_API_KEY
 
 
 class ObjectSchema(BaseModel):
@@ -91,7 +84,7 @@ def get_refine_template():
     return refine_template
 
 
-def create_openai_schema(documents: List[Document]):
+def create_schema(documents: List[Document]):
     # Instantiate your LLM
     if DEPLOYMENT_NAME == "Llama-3.3-70B-Instruct":
         llm = get_open_source_llm()
