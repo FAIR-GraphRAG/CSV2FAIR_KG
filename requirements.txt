@@ -19,3 +19,4 @@ uvicorn
 pydantic
 jinja2
 python-multipart
+langchian_azure_ai
