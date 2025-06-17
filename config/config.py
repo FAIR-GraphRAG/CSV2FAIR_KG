@@ -12,7 +12,7 @@ AZURE_OPEN_SOURCE_ENDPOINT = os.getenv("AZURE_OPEN_SOURCE_ENDPOINT")
 AZURE_OPEN_SOURCE_DEPLOYMENT_NAME = os.getenv("OPEN_SOURCE_DEPLOYMENT_NAME")
 
 # Models: gpt-4o-mini, Llama-3.3-70B-Instruct
-DEPLOYMENT_NAME = "Llama-3.3-70B-Instruct"
+DEPLOYMENT_NAME = "gpt-4o-mini"
 
 BIOONTOLOGY_API_KEY = os.getenv("API_KEY_BIOONTOLOGY")
 BIOONTOLOGY_API_URL = "https://data.bioontology.org"

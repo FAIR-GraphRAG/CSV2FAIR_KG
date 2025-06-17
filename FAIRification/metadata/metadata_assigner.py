@@ -21,6 +21,7 @@ def assign_metadata(schema_dir, metadata_dir):
             if os.path.exists(dataset_meta_path):
                 metadata = read_json(dataset_meta_path)
                 # If you want pid here too (add if needed)
+                metadata["pid"] = schema_data["pid"]
                 schema_data["metadata"] = metadata
 
             # For sample_X.json: add to each second-level properties object and include pid
@@ -28,13 +29,21 @@ def assign_metadata(schema_dir, metadata_dir):
             if os.path.exists(sample_meta_path):
                 metadata = read_json(sample_meta_path)
                 for obj in schema_data["properties"].values():
-                    if "properties" in obj and isinstance(obj["properties"], dict):
-                        # Make a shallow copy of metadata to avoid mutating the original
+                    if (
+                        isinstance(obj, dict)
+                        and "properties" in obj
+                        and isinstance(obj["properties"], dict)
+                    ):
                         metadata_copy = metadata.copy()
-                        if "pid" in obj:
+                        # Only set 'pid' if 'obj' is a dict and has the 'pid' key
+                        if isinstance(obj, dict) and "pid" in obj:
                             metadata_copy["pid"] = obj["pid"]
                         obj["properties"]["metadata"] = metadata_copy
                         changed = True
+                    else:
+                        print(
+                            f"⚠️ Warning: Expected a dict with 'properties' but got {type(obj)}: {obj}"
+                        )
 
             if changed:
                 save_json(schema_path, schema_data)

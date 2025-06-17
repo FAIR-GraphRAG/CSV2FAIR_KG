@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     if FAIR_GRAPH:
         create_schema(JSON_FILE, INITIAL_SCHEMA)
-        extract_entities(DATA_DIR, CSV_DIR, JSON_DIR)
+        extract_entities(DATA_DIR, CSV_DIR, JSON_DIR, JSON_FILE)
         update_with_doi(METADATA_DIR, JSON_DIR)
         add_pid_to_json(JSON_DIR)
         add_ontology_mappings(

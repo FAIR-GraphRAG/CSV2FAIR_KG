@@ -61,7 +61,3 @@ def add_pid_to_json(folder_path):
 
             except Exception as e:
                 print(f"Unexpected error processing {file_path}: {e}")
-
-
-if __name__ == "__main__":
-    add_pid_to_json()
