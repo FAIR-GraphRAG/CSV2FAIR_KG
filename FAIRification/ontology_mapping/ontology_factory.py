@@ -17,14 +17,10 @@ Process Soll:
 - save custom vocabulary
 """
 
-INPUT_JSON = "data/schema/schema.json"
-CSV_MATCHES = "data/ontology/ontology_matches.csv"
-CSV_SELECTIONS = "data/ontology/ontology_selections.csv"
-ONTOLOGY_SCHEMA = "data/schema/ontology_schema.json"
-EXTRACTED_JSON = "data/extracted_data/filled_schema"
 
-
-def add_ontology_mappings():
+def add_ontology_mappings(
+    INPUT_JSON, CSV_MATCHES, CSV_SELECTIONS, ONTOLOGY_SCHEMA, EXTRACTED_JSON
+):
     recommend_ontologies(INPUT_JSON, CSV_MATCHES)
     select_ontologies(CSV_MATCHES, CSV_SELECTIONS)
     save_ontology2json(CSV_SELECTIONS, INPUT_JSON, ONTOLOGY_SCHEMA)

@@ -13,8 +13,6 @@ load_dotenv()
 
 zenodo_base_url = "https://sandbox.zenodo.org"
 doi_base_url = "https://doi.org/"
-dataset_metadata_dir = "data/extracted_data/metadata"
-dataset_dir = "data/extracted_data/filled_schema"
 
 ACCESS_TOKEN = os.getenv("ZENODO_SANDBOX_TOKEN")
 
@@ -56,7 +54,7 @@ def request_zenodo_doi(metadata):
         print(f"Error requesting DOI: {e}")
 
 
-def update_with_doi():
+def update_with_doi(dataset_metadata_dir, dataset_dir):
     for i, filename in enumerate(sorted(os.listdir(dataset_metadata_dir))):
         if filename.startswith("dataset") and filename.endswith(".json"):
             file_path = os.path.join(dataset_metadata_dir, filename)

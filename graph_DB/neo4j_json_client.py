@@ -7,9 +7,6 @@ from config.config import NEO4J_URL, NEO4J_USERNAME, NEO4J_PASSWORD
 
 load_dotenv()
 
-JSON_GLOB = "data/extracted_data/filled_schema/*.json"
-METADATA_GLOB = "data/extracted_data/metadata/*.json"
-
 driver = GraphDatabase.driver(NEO4J_URL, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
 
 
@@ -97,9 +94,9 @@ def upsert_rel(tx, pid1, rel_type, sim, pid2):
     )
 
 
-def build_metadata_cache():
+def build_metadata_cache(metadata_glob):
     cache = {}
-    for path in glob.glob(METADATA_GLOB):
+    for path in glob.glob(metadata_glob):
         with open(path, encoding="utf-8") as f:
             meta = json.load(f)
         pid = meta.get("pid")
@@ -108,8 +105,8 @@ def build_metadata_cache():
     return cache
 
 
-def insert_data(json_glob=JSON_GLOB):
-    meta_cache = build_metadata_cache()
+def insert_data(json_glob, metadata_glob):
+    meta_cache = build_metadata_cache(metadata_glob)
     with driver.session() as session:
         for path in glob.glob(json_glob):
             with open(path, encoding="utf-8") as f:

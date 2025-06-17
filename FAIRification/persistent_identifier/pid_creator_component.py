@@ -11,7 +11,6 @@ import os
 import shortuuid
 
 base_URI = "https://fair-graph.org/"
-folder_path = "data/extracted_data/filled_schema"
 
 
 def generate_random_sequence(k_num):
@@ -27,7 +26,7 @@ def get_pid_urn(dataset_pid):
     return pid, f"urn:{dataset_pid}/{pid}"
 
 
-def add_pid_to_json():
+def add_pid_to_json(folder_path):
     if not os.path.isdir(folder_path):
         print(f"Error: Folder '{folder_path}' does not exist.")
         return

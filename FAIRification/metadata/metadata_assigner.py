@@ -2,11 +2,8 @@ import re
 import os
 from utils.helper import read_json, save_json
 
-schema_dir = "data/extracted_data/filled_schema"
-metadata_dir = "data/extracted_data/metadata"
 
-
-def assign_metadata():
+def assign_metadata(schema_dir, metadata_dir):
     for file_name in os.listdir(schema_dir):
         if file_name.startswith("table_") and file_name.endswith(".json"):
             match = re.match(r"table_(\d+)\.json", file_name)

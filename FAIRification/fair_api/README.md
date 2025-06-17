@@ -7,7 +7,7 @@
   uvicorn FAIRification.fair_api.main:app --reload
   ```
 
-## Working Endpoints
+## Example Endpoints (exchange with actual identifiers)
 * dataset: http://127.0.0.1:8000/10.5281/zenodo.213278
 * dataset: http://127.0.0.1:8000/10.5281/zenodo.213280
 * entity: http://127.0.0.1:8000/10.5281/zenodo.213278/nht5QgsLp2U4j9yCM9Thou
