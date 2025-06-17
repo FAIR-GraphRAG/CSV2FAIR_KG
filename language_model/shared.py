@@ -5,6 +5,7 @@ from config.config import (
     AZURE_OPEN_SOURCE_ENDPOINT,
     AZURE_OPEN_SOURCE_KEY,
     DEPLOYMENT_NAME,
+    AZURE_ENDPOINT,
 )
 from langchain_azure_ai.chat_models import AzureAIChatCompletionsModel
 
@@ -13,6 +14,7 @@ def get_openai_llm():
     # Instantiate your LLM
     llm = AzureChatOpenAI(
         azure_deployment=DEPLOYMENT_NAME,
+        azure_endpoint=AZURE_ENDPOINT,
         api_version=AZURE_API_VERSION,
         temperature=0,
         max_tokens=None,

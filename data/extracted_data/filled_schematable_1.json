@@ -1,0 +1,659 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Dataset",
+    "description": "Study object (such as patient, gene or cell) related information",
+    "properties": {
+        "gene_0": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "Gene",
+            "description": "Gene related information",
+            "properties": [
+                {
+                    "gene": "TSPAN6"
+                },
+                {
+                    "gene_id": "ENSG00000000003"
+                },
+                {
+                    "biotype": "protein_coding"
+                },
+                {
+                    "strand": "-"
+                },
+                {
+                    "locus": "chrX:99883666-99894988"
+                },
+                {
+                    "GroupB_FPKM": "2.93781"
+                },
+                {
+                    "GroupA_FPKM": "2.7836"
+                },
+                {
+                    "Fold change": "1.05539978884"
+                },
+                {
+                    "log2(fold change)": "0.0777896"
+                },
+                {
+                    "p_value": "0.93295"
+                },
+                {
+                    "FDR": "0.994357"
+                },
+                {
+                    "Regulation": "up"
+                },
+                {
+                    "GeneID": "7105"
+                },
+                {
+                    "Synonyms": "T245|TM4SF6|TSPAN-6"
+                },
+                {
+                    "dbXrefs": "MIM:300191|HGNC:HGNC:11858|Ensembl:ENSG00000000003|HPRD:02179"
+                },
+                {
+                    "chromosome": "X"
+                },
+                {
+                    "map_location": "Xq22"
+                },
+                {
+                    "description": "tetraspanin 6"
+                },
+                {
+                    "pathway": ""
+                },
+                {
+                    "GO-CC": "GO:0016021(integral component of membrane)//GO:0005887(integral component of plasma membrane)//GO:0070062(extracellular exosome)"
+                },
+                {
+                    "GO-MF": "GO:0004871(signal transducer activity)//GO:0005515(protein binding)"
+                },
+                {
+                    "GO-BP": "GO:1901223(negative regulation of NIK/NF-kappaB signaling)//GO:0039532(negative regulation of viral-induced cytoplasmic pattern recognition receptor signaling pathway)//GO:0007166(cell surface receptor signaling pathway)//GO:0043123(positive regulation of I-kappaB kinase/NF-kappaB signaling)"
+                }
+            ]
+        },
+        "GO-BP_00": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:1901223(negative regulation of NIK/NF-kappaB signaling)"
+                }
+            ]
+        },
+        "GO-BP_01": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0039532(negative regulation of viral-induced cytoplasmic pattern recognition receptor signaling pathway)"
+                }
+            ]
+        },
+        "GO-BP_02": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0007166(cell surface receptor signaling pathway)"
+                }
+            ]
+        },
+        "GO-BP_03": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0043123(positive regulation of I-kappaB kinase/NF-kappaB signaling)"
+                }
+            ]
+        },
+        "gene_1": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "Gene",
+            "description": "Gene related information",
+            "properties": [
+                {
+                    "gene": "TNMD"
+                },
+                {
+                    "gene_id": "ENSG00000000005"
+                },
+                {
+                    "biotype": "protein_coding"
+                },
+                {
+                    "strand": "+"
+                },
+                {
+                    "locus": "chrX:99839798-99854882"
+                },
+                {
+                    "GroupB_FPKM": "0.449399"
+                },
+                {
+                    "GroupA_FPKM": "0.083861"
+                },
+                {
+                    "Fold change": "5.35883724444"
+                },
+                {
+                    "log2(fold change)": "2.42192"
+                },
+                {
+                    "p_value": "1"
+                },
+                {
+                    "FDR": "1"
+                },
+                {
+                    "Regulation": "up"
+                },
+                {
+                    "GeneID": "64102"
+                },
+                {
+                    "Synonyms": "BRICD4|CHM1L|TEM"
+                },
+                {
+                    "dbXrefs": "MIM:300459|HGNC:HGNC:17757|Ensembl:ENSG00000000005|HPRD:02352|Vega:OTTHUMG00000022001"
+                },
+                {
+                    "chromosome": "X"
+                },
+                {
+                    "map_location": "Xq21.33-q23"
+                },
+                {
+                    "description": "tenomodulin"
+                },
+                {
+                    "pathway": ""
+                },
+                {
+                    "GO-CC": "GO:0016021(integral component of membrane)//GO:0005737(cytoplasm)//GO:0005635(nuclear envelope)"
+                },
+                {
+                    "GO-MF": "GO:0005515(protein binding)"
+                },
+                {
+                    "GO-BP": "GO:0071773(cellular response to BMP stimulus)//GO:0001937(negative regulation of endothelial cell proliferation)//GO:0035990(tendon cell differentiation)//GO:0001886(endothelial cell morphogenesis)//GO:0016525(negative regulation of angiogenesis)"
+                }
+            ]
+        },
+        "GO-BP_04": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0071773(cellular response to BMP stimulus)"
+                }
+            ]
+        },
+        "GO-BP_05": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0001937(negative regulation of endothelial cell proliferation)"
+                }
+            ]
+        },
+        "GO-BP_06": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0035990(tendon cell differentiation)"
+                }
+            ]
+        },
+        "GO-BP_07": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0001886(endothelial cell morphogenesis)"
+                }
+            ]
+        },
+        "GO-BP_08": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0016525(negative regulation of angiogenesis)"
+                }
+            ]
+        },
+        "gene_2": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "Gene",
+            "description": "Gene related information",
+            "properties": [
+                {
+                    "gene": "SCYL3"
+                },
+                {
+                    "gene_id": "ENSG00000000457"
+                },
+                {
+                    "biotype": "protein_coding"
+                },
+                {
+                    "strand": "-"
+                },
+                {
+                    "locus": "chr1:169631244-169863408"
+                },
+                {
+                    "GroupB_FPKM": "4.12709"
+                },
+                {
+                    "GroupA_FPKM": "3.35184"
+                },
+                {
+                    "Fold change": "1.23129120075"
+                },
+                {
+                    "log2(fold change)": "0.300172"
+                },
+                {
+                    "p_value": "0.78845"
+                },
+                {
+                    "FDR": "0.994357"
+                },
+                {
+                    "Regulation": "up"
+                },
+                {
+                    "GeneID": "57147"
+                },
+                {
+                    "Synonyms": "PACE-1|PACE1"
+                },
+                {
+                    "dbXrefs": "MIM:608192|HGNC:HGNC:19285|Ensembl:ENSG00000000457|HPRD:07459|Vega:OTTHUMG00000035941"
+                },
+                {
+                    "chromosome": "1"
+                },
+                {
+                    "map_location": "1q24.2"
+                },
+                {
+                    "description": "SCY1-like, kinase-like 3"
+                },
+                {
+                    "pathway": ""
+                },
+                {
+                    "GO-CC": "GO:0005794(Golgi apparatus)//GO:0030027(lamellipodium)//GO:0005737(cytoplasm)"
+                },
+                {
+                    "GO-MF": "GO:0005524(ATP binding)//GO:0004672(protein kinase activity)//GO:0016301(kinase activity)//GO:0005515(protein binding)"
+                },
+                {
+                    "GO-BP": "GO:0006468(protein phosphorylation)//GO:0016477(cell migration)"
+                }
+            ]
+        },
+        "GO-BP_09": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0006468(protein phosphorylation)"
+                }
+            ]
+        },
+        "GO-BP_10": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0016477(cell migration)"
+                }
+            ]
+        },
+        "gene_3": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "Gene",
+            "description": "Gene related information",
+            "properties": [
+                {
+                    "gene": "FGR"
+                },
+                {
+                    "gene_id": "ENSG00000000938"
+                },
+                {
+                    "biotype": "protein_coding"
+                },
+                {
+                    "strand": "-"
+                },
+                {
+                    "locus": "chr1:27938574-27961788"
+                },
+                {
+                    "GroupB_FPKM": "264.257"
+                },
+                {
+                    "GroupA_FPKM": "119.67"
+                },
+                {
+                    "Fold change": "2.20821401261"
+                },
+                {
+                    "log2(fold change)": "1.14288"
+                },
+                {
+                    "p_value": "0.2141"
+                },
+                {
+                    "FDR": "0.994357"
+                },
+                {
+                    "Regulation": "up"
+                },
+                {
+                    "GeneID": "2268"
+                },
+                {
+                    "Synonyms": "SRC2|c-fgr|c-src2|p55-Fgr|p55c-fgr|p58-Fgr|p58c-fgr"
+                },
+                {
+                    "dbXrefs": "MIM:164940|HGNC:HGNC:3697|Ensembl:ENSG00000000938|HPRD:01288|Vega:OTTHUMG00000003516"
+                },
+                {
+                    "chromosome": "1"
+                },
+                {
+                    "map_location": "1p36.2-p36.1"
+                },
+                {
+                    "description": "FGR proto-oncogene, Src family tyrosine kinase"
+                },
+                {
+                    "pathway": "hsa04062(Chemokine signaling pathway)//hsa05169(Epstein-Barr virus infection)"
+                },
+                {
+                    "GO-CC": "GO:0005743(mitochondrial inner membrane)//GO:0070062(extracellular exosome)//GO:0032587(ruffle membrane)//GO:0015629(actin cytoskeleton)//GO:0005886(plasma membrane)//GO:0005829(cytosol)//GO:0005758(mitochondrial intermembrane space)//GO:0031234(extrinsic component of cytoplasmic side of plasma membrane)//GO:0005856(cytoskeleton)"
+                },
+                {
+                    "GO-MF": "GO:0001784(phosphotyrosine binding)//GO:0034988(Fc-gamma receptor I complex binding)//GO:0004713(protein tyrosine kinase activity)//GO:0004715(non-membrane spanning protein tyrosine kinase activity)//GO:0005524(ATP binding)//GO:0034987(immunoglobulin receptor binding)//GO:0019901(protein kinase binding)//GO:0005515(protein binding)"
+                },
+                {
+                    "GO-BP": "GO:0050715(positive regulation of cytokine secretion)//GO:0007169(transmembrane receptor protein tyrosine kinase signaling pathway)//GO:0050830(defense response to Gram-positive bacterium)//GO:0009615(response to virus)//GO:0050764(regulation of phagocytosis)//GO:0014068(positive regulation of phosphatidylinositol 3-kinase signaling)//GO:0038096(Fc-gamma receptor signaling pathway involved in phagocytosis)//GO:0007229(integrin-mediated signaling pathway)//GO:0030335(positive regulation of cell migration)//GO:0045859(regulation of protein kinase activity)//GO:0008360(regulation of cell shape)//GO:0007596(blood coagulation)//GO:0038083(peptidyl-tyrosine autophosphorylation)//GO:0042127(regulation of cell proliferation)//GO:0046777(protein autophosphorylation)//GO:0002768(immune response-regulating cell surface receptor signaling pathway)//GO:0043306(positive regulation of mast cell degranulation)//GO:0045088(regulation of innate immune response)//GO:0045087(innate immune response)//GO:0043552(positive regulation of phosphatidylinositol 3-kinase activity)//GO:0018108(peptidyl-tyrosine phosphorylation)//GO:0006468(protein phosphorylation)//GO:0030154(cell differentiation)"
+                }
+            ]
+        },
+        "pathway_00": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "pathway",
+            "description": "Information related to pathway",
+            "properties": [
+                {
+                    "pathway": "hsa04062(Chemokine signaling pathway)"
+                }
+            ]
+        },
+        "pathway_01": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "pathway",
+            "description": "Information related to pathway",
+            "properties": [
+                {
+                    "pathway": "hsa05169(Epstein-Barr virus infection)"
+                }
+            ]
+        },
+        "GO-BP_11": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0050715(positive regulation of cytokine secretion)"
+                }
+            ]
+        },
+        "GO-BP_12": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0007169(transmembrane receptor protein tyrosine kinase signaling pathway)"
+                }
+            ]
+        },
+        "GO-BP_13": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0050830(defense response to Gram-positive bacterium)"
+                }
+            ]
+        },
+        "GO-BP_14": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0009615(response to virus)"
+                }
+            ]
+        },
+        "GO-BP_15": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0050764(regulation of phagocytosis)"
+                }
+            ]
+        },
+        "GO-BP_16": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0014068(positive regulation of phosphatidylinositol 3-kinase signaling)"
+                }
+            ]
+        },
+        "GO-BP_17": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0038096(Fc-gamma receptor signaling pathway involved in phagocytosis)"
+                }
+            ]
+        },
+        "GO-BP_18": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0007229(integrin-mediated signaling pathway)"
+                }
+            ]
+        },
+        "GO-BP_19": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0030335(positive regulation of cell migration)"
+                }
+            ]
+        },
+        "GO-BP_20": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0045859(regulation of protein kinase activity)"
+                }
+            ]
+        },
+        "GO-BP_21": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0008360(regulation of cell shape)"
+                }
+            ]
+        },
+        "GO-BP_22": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0007596(blood coagulation)"
+                }
+            ]
+        },
+        "GO-BP_23": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0038083(peptidyl-tyrosine autophosphorylation)"
+                }
+            ]
+        },
+        "GO-BP_24": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0042127(regulation of cell proliferation)"
+                }
+            ]
+        },
+        "GO-BP_25": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0046777(protein autophosphorylation)"
+                }
+            ]
+        },
+        "GO-BP_26": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0002768(immune response-regulating cell surface receptor signaling pathway)"
+                }
+            ]
+        },
+        "GO-BP_27": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0043306(positive regulation of mast cell degranulation)"
+                }
+            ]
+        },
+        "GO-BP_28": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0045088(regulation of innate immune response)"
+                }
+            ]
+        },
+        "GO-BP_29": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0045087(innate immune response)"
+                }
+            ]
+        },
+        "GO-BP_30": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0043552(positive regulation of phosphatidylinositol 3-kinase activity)"
+                }
+            ]
+        },
+        "GO-BP_31": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0018108(peptidyl-tyrosine phosphorylation)"
+                }
+            ]
+        },
+        "GO-BP_32": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0006468(protein phosphorylation)"
+                }
+            ]
+        },
+        "GO-BP_33": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "GO-BP",
+            "description": "Information related to GO-BP",
+            "properties": [
+                {
+                    "GO-BP": "GO:0030154(cell differentiation)"
+                }
+            ]
+        }
+    }
+}
