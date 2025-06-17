@@ -1,0 +1,34 @@
+# gpt-4o-mini, Non-FAIR GraphRAG (only no-answer/server error questions listed)
+## General 18/22 correct
+What pathway is the gene FKBP4 associated with?
+Which gene is described as “FK506 binding protein 4”?
+Which gene has a higher fold change, NDUFAF7 or CAMKK1?
+
+Advanced Questions
+Which gene among those listed is annotated to participate in 'cell surface receptor signaling pathway' and what is its biotype? -> no answer
+
+Metadata & Ontology 0/20
+- for all: no-answer
+
+# Llama-3.3-70B-Instruct,  Non-FAIR GraphRAG (only no-answer/server error questions listed) 
+## General 8/22 correct -> most of the time invalid input, interpretation of fields was wrong
+List the synonyms for the gene TNMD.
+Which chromosome is the FGR gene located on?
+Give the description of the gene LAS1L.
+Which chromosome is the SLC7A2 gene located on?
+What is the map location for FKBP4?
+What is the description of the gene CAMKK1?
+What pathway is the gene FKBP4 associated with?
+Which gene has the synonym FLIP?
+What is the log2(fold change) for CAMKK1?
+What is the regulation status of SLC7A2?
+Which gene has a higher fold change, NDUFAF7 or CAMKK1?
+What is the value of the p_value for the gene SLC7A2?
+
+Advanced Questions
+Which gene shows the largest difference in expression (fold change) between Group B and Group A?
+List all genes located on chromosome X and describe their main biological process (from the GO-BP field)., -> Based on the provided information, the genes located on chromosome X are MSL3 (error: missing genes!)
+Which gene among those listed is annotated to participate in 'cell surface receptor signaling pathway' and what is its biotype?
+
+Metadata & Ontology 0/20 correct
+- for all: no-answer or invalid input
