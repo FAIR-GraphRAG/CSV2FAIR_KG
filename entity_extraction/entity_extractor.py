@@ -12,13 +12,10 @@ def extract_field(document, field_name):
     return document.get(field_name, None)
 
 
-def extract_entities():
+def extract_entities(data_dir, csv_dir, output_dir):
     # For each table row fill each schema object by extracting information using matching property keys
     # If values include separators (e.g., //) then split and create separate entities if it is not the full row entity class
     # For each table fill one schema that maintains the main structure as the original base schema
-    data_dir = "data/hepatic"
-    csv_dir = "csv_data"
-    output_dir = "data/extracted_data/filled_schema/"
 
     base_schema = read_json("data/schema/schema.json")
     table_documents = find_docs_in_folder(csv_dir, data_dir, cut_file=False)

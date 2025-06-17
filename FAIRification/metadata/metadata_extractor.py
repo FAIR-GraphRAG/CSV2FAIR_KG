@@ -1,10 +1,4 @@
 """
-Old:
-- From folder metadata_PEP extract _GSE.soft and _GSM.soft
-- Feed _GSE.soft (experiment metadata) to the LLM factory
-- LLM extracts metadata for Dataset-Level FAIR DOs
-- Save metadata in json file
-New:
 - From folder "metadata_PEP"  extract _GSE.soft and _GSM.soft
 - Create separate metadata JSON files for document and entity node
 - Use domain-specific metadata format of file, if available, else fill backup metadata schema and add uncovered entries ("data/extracted_data/metadata/")
@@ -14,11 +8,7 @@ from language_model.chat_client_factory import client_selector
 from utils.helper import save_json, find_docs_in_folder
 
 
-def extract_metadata():
-    metadata_dir = "metadata_PEP"
-    data_dir = "data/hepatic"
-    output_path = "data/extracted_data/metadata/"
-
+def extract_metadata(metadata_dir, data_dir, output_path):
     documents = find_docs_in_folder(metadata_dir, data_dir)
     dataset_counter = 1
     sample_counter = 1

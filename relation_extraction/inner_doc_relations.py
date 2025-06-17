@@ -1,8 +1,6 @@
 import os
 from utils.helper import read_json, save_json
 
-JSON_DIR = "data/extracted_data/filled_schema"
-
 
 def _append_relation(section: dict, rel_obj: dict):
     section.setdefault("relations", []).append(rel_obj)
@@ -66,14 +64,6 @@ def add_entity_links(data, first_type_name):
                     }
                     _append_relation(first_section, rel_obj)
 
-                    # Optional reverse relation:
-                    # rel_obj_rev = {
-                    #     "node1": other_pid,
-                    #     "relation_label": f"IS_{other_type.replace('-', '_').upper()}_OF",
-                    #     "node2": first_pid,
-                    # }
-                    # _append_relation(other_section, rel_obj_rev)
-
 
 def add_belongs_to(data):
     dataset_pid = data.get("pid", "")
@@ -89,7 +79,7 @@ def add_belongs_to(data):
         _append_relation(section, rel_obj)
 
 
-def find_relations():
+def find_relations(JSON_DIR):
     # Read the top‐level schema in order to identify the "first type"
     schema_path = "data/schema/schema.json"
     from utils.helper import read_json as read_json_schema
