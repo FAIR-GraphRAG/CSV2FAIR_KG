@@ -1,0 +1,51 @@
+General Questions
+
+What is the biotype of the gene TSPAN6?, protein_coding
+List the synonyms for the gene TNMD., BRICD4|CHM1L|TEM
+What is the fold change for the gene SCYL3?, 1.231
+Which chromosome is the FGR gene located on?, 1
+Give the description of the gene LAS1L., LAS1-like, ribosome biogenesis factor
+Which gene among these has the highest fold change between poor and good prognosis groups?, KRT33A
+List the synonyms for the gene NDUFAF7., C2orf56 | MidA | PRO1853
+Which chromosome is the SLC7A2 gene located on?, 8
+What is the fold change for the gene PLXND1?, 1.915.
+Give the biotype of the gene CD38., protein_coding
+What is the map location for FKBP4?, 12p13.33
+What is the description of the gene CAMKK1?, calcium/calmodulin-dependent protein kinase kinase 1, alpha
+Which gene has the synonym FLIP?, CFLAR -> sensitive to 'FLIP'
+What is the log2(fold change) for CAMKK1?, The log2(fold change) for CAMKK1 is 0.739994.
+What is the regulation status of SLC7A2?, The regulation status of SLC7A2 is classified as "up."
+Which gene has a higher fold change, NDUFAF7 or CAMKK1?, CAMKK1 has a higher fold change of 1.6702 compared to NDUFAF7, which has a fold change of 2.2777.
+Which gene is described as “FK506 binding protein 4”?, FKBP4
+What is the value of the p_value for the gene SLC7A2? 1
+What is the GeneID for the gene LAS1L? 81887
+
+Advanced Questions
+Which gene shows the largest difference in expression (fold change) between Group B and Group A?, TNMD, with a fold change of 5.36.
+List all genes located on chromosome X and describe their main biological process (from the GO-BP field). MSL3, TSPAN6, TNMD and their processes
+Which gene among those listed is annotated to participate in 'cell surface receptor signaling pathway' and what is its biotype?, "CALCR""protein_coding", "TSPAN6""protein_coding", "CALCR""protein_coding", "TSPAN6""protein_coding", "FGR""protein_coding"
+
+Metadata
+What is the Ensembl gene ID for TSPAN6?, ENSG00000000003
+What is the common organism for all samples in this dataset? (Answer: Homo sapiens) -> consumes many tokens!
+On which date were the samples submitted to GEO (select a random gene)? (Answer: Oct 31 2024)
+What is the sequencing instrument used for this study? (Answer: Illumina HiSeq 4000)
+What library preparation kit was used to construct the RNA libraries?-> RNA libraries were constructed by using NEBNext® Ultra™ II Directional RNA Library Prep Kit (New England Biolabs, Inc., Massachusetts, USA) 
+What is the GEO accession number for this dataset?GSE280797
+Which country is the research institute located in? China
+What is the main tissue source for RNA extraction in these samples? human bile
+Which platform was used for RNA sequencing in this study?, GPL20301
+On what date was this dataset last updated in GEO?, January 30, 2025.
+
+Ontology
+What is the pathway_ontology_link for the gene PLXND1? -> "https://data.bioontology.org/ontologies/NCIT/classes/http%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23C54214"
+Which ontology term is associated with the biotype_ontology_term for the gene FKBP4?, The ontology term associated with the biotype_ontology_term for the gene FKBP4 is OCHV.
+Provide the GO-BP ontology term linked to the gene CFLAR., The GO-BP ontology terms linked to the gene CFLAR include: - GO:0097300 (programmed necrotic cell death) - GO:0014842 (regulation of skeletal muscle satellite cell proliferation)
+What is the value of regulation ontology term for the gene CAMKK1?,The value of Regulation_ontology_term for the gene CAMKK1 is "regulation."
+Which description_ontology_link is available for the gene NDUFAF7?, (https://data.bioontology.org/ontologies/OCHV/classes/http%3A%2F%2Fsbmi.uth.tmc.edu%2Fontology%2Fochv%23C0678257)
+What is the chromosome ontology name for the gene CD38?, The chromosome ontology name for the gene CD38 is OCHV.
+What is the Fold change ontology link for the gene SCYL3?, (https://data.bioontology.org/ontologies/NCIT/classes/http%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23C60693)
+Give the locus_ontology_name for the gene TSPAN6., NCIT
+Which GeneID ontology link is associated with the gene TNMD?, (https://data.bioontology.org/ontologies/COMO/classes/http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCOMO_0000224).
+What is the strand_ontology_name for the gene LAS1L?, COMO
+
