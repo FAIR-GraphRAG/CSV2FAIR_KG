@@ -1,5 +1,4 @@
 .env
-/data
 venv-*
 __pycache__
 *.pyc
@@ -12,3 +11,6 @@ __pycache__
 *.whl
 *.log
 /evaluation
+data/hepatic/*
+data/ontology/*
+data/schema/schema.json
