@@ -1,101 +1,83 @@
-# Table2FAIR_KG
-The **Table2FAIR_KG** module expects tables as input data and finally constructs a FAIR-compliant knowledge graph.
+# CSV2FAIR_KG
 
-## Environment & Requirements
-### Setup Environment
-    ```bash
-    python3 -m venv venv-tab2g
-    source venv-tab2g/bin/activate
-    ```
-    ```bash
-    pip install --upgrade pip
-    python3 -m pip install -r requirements.txt
-    ```
+**CSV2FAIR_KG** transforms tabular data (CSV) into FAIR-compliant knowledge graphs for biomedical research. It integrates ontology mapping, metadata enrichment, and graph construction for semantic applications.
 
+## Environment Setup (Linux)
 
-## Pipeline Overview
+```bash
+python3 -m venv venv-tab2g
+source venv-tab2g/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
 
-This section describes the stages of the system.
+## Requirements and Access
 
----
+To use this pipeline, ensure you have:
 
-### 1. Document Collection to Schema
+- Azure OpenAI API access (for LLM-based enrichment)
+- BioOntology API access (for ontology annotation)
+- Neo4j Desktop or Aura (free version) for graph storage and visualization
 
-- **Component-Level Definition:**  
-  - Define components in Component-Level in `data/schema/levels.json`.
-  - Iteratively extract keywords using `levels.json` and `.csv` tables.
-  - Save schema as `schema.json`.
+Create a `.env` file by copying and editing the provided `.env_dummy` file:
 
-- **Unified Vocabulary Creation:**  
-  - Build a unified vocabulary from the extracted keywords.
-  - Map schema keys to the vocabulary and update the schema accordingly.
+```bash
+cp .env_dummy .env
+# Then edit .env with your credentials
+```
 
----
+## Configuration
 
-### 2. Schema to Extracted Entities
+Edit settings in `config/config.py`:
 
-- **Entity Extraction:**  
-  - Leverage LLM to perform extraction based on the schema.
-  - Fill the schema with the extracted entities.
+```python
+DEPLOYMENT_NAME = "YOUR_MODEL_NAME"      # Set the deployed model name
+FAIR_GRAPH = True                        # Set to False for baseline GraphRAG
+ENTITY_CLASS_LIST = ["pathway"]          # Define biomedical entity classes
+```
 
----
+## Running the Pipeline
 
-### 3. Extracted Entities to FAIR DO Entities
+Execute the main script:
 
-- **Metadata Enrichment:**  
-  - **GEO Metadata:**  
-    - Retrieve geographical metadata using `geofetch`.
-    - Metadata is available in the PEP format, including `_GSE.soft` for experiments and `_GSM.soft` for individual samples.
-    - Testing was performed with datasets: **GSE244832** and **GSE280797**.
-  - **Additional Data Formats:**  
-    - **GSE244832:** Provided as both biomedical `.bed` files and processed file formats.
-  - **Challenges and Solutions:**  
-    - **Problem:** Sample metadata cannot be directly assigned to specific rows.
-    - **Solution:**  
-      - Define mandatory metadata at the row/component level; store the remainder at the document level.
-      - Utilize the Dublin Core Metadata Elements standard.
-      - Employ an LLM to enrich the Dublin schema with information from `_GSE.soft`.
-      - Save remaining metadata at the Document-Level FAIR DO.
+```bash
+python3 main.py
+```
 
-- **Ontology Mapping:**  
-  - Map schema keys to the UMLS vocabulary.
-  - Integrate additional or new ontology based on the mapped vocabulary and table values.
+After execution, visualize the generated graph in Neo4j Desktop or Aura.
 
----
+## Data Structure
 
-### 4. FAIR DO Entities to FAIR DO Entities & Relations
+Optimized for Gene Expression Omnibus (GEO) Series data:
 
-- **Embedding of Entities:**  
-  - Generate embeddings using an embedding model.
-- **Relation Extraction:**  
-  - Extract relations based on the generated embeddings.
-  - Perform extraction across multiple levels:
-    - Cross-level
-    - Inner-level
-    - Inner-document
+- CSV tables:  
+  `data/hepatic/GSE.../csv_data/`
 
----
-
-### 5. FAIR DO Entities & Relations to FAIR Knowledge Graph
-
-- **Graph Integration:**  
-  - Integrate entities (nodes) and relations (edges) into a Neo4j knowledge graph.
-  - Validate integration using SHACL tests.
-
----
-
-### Todos
-
-- **Document-Level Nodes:**  
-  - Construct Document-Level nodes that encapsulate full document content
+- Metadata (PEP):  
+  `data/hepatic/GSE.../metadata_PEP/`  
+  (expects `_GSE.soft` and `_GSM.soft` files)
 
 
-## Legal Notice
+## Citation
 
-This project utilizes data from the [Unified Medical Language System (UMLS) Metathesaurus](https://www.nlm.nih.gov/research/umls/) provided by the [National Library of Medicine (NLM)](https:/www.nlm.nih.gov/). 
+If you use **CSV2FAIR_KG** in your research or application, please cite the following:
 
-**Version:** 2024-01-08
+> Flüh, M. (2025). *FAIR GraphRAG: A Retrieval-Augmented Generation Approach for Semantic Data Analysis*.
 
-Use of the UMLS Metathesaurus is governed by the [UMLS Knowledge Sources Terms of Use](https://www.nlm.nih.gov/databases/download/terms_and_conditions.html). All users must comply with these terms and provide the correct attribution as specified in the official guidelines.
+A formal citation file is included as [`CITATION.cff`](CITATION.cff) for automated reference managers and repositories.
 
-For the most up-to-date citation information, please consult the NLM documentation.
+## License
+
+This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute this software with attribution.
+
+## Project Metadata
+
+- **Title:** CSV2FAIR_KG  
+- **Description:** A pipeline for converting biomedical tabular data into FAIR-compliant knowledge graphs using methods for FAIRification and graph construction.  
+- **Version:** 1.0.0  
+- **Release Date:** 2025-06-17  
+- **Keywords:** FAIR Principles, knowledge graph construction, large language model  
+- **Authors:**  
+- **Repository:** 
+- **License:** MIT  
+- **DOI:** 
