@@ -1,16 +1,11 @@
 import os
 import json
 from langchain_core.prompts import PromptTemplate
-from config.config import AZURE_ENDPOINT, AZURE_OPENAI_API_KEY, DEPLOYMENT_NAME
+from config.config import DEPLOYMENT_NAME
 from langchain_core.output_parsers import JsonOutputParser
 from pydantic import BaseModel
 from language_model.shared import get_openai_llm, get_open_source_llm
-from utils.helper import read_json
 from typing import Optional
-
-# Set environment variables for Azure OpenAI
-os.environ["AZURE_OPENAI_ENDPOINT"] = AZURE_ENDPOINT
-os.environ["AZURE_OPENAI_API_KEY"] = AZURE_OPENAI_API_KEY
 
 
 def get_initial_template():
@@ -50,7 +45,7 @@ def get_parser():
     return parser
 
 
-def extract_openai_metadata(document):
+def extract_metadata(document):
     if DEPLOYMENT_NAME == "Llama-3.3-70B-Instruct":
         llm = get_open_source_llm()
     else:
@@ -63,9 +58,6 @@ def extract_openai_metadata(document):
         template=initial_template,
     )
 
-    schema_dublin_core = read_json("data/schema/component-level_metadata.json")
-    schema = read_json("data/schema/ontology_schema.json")
-
     parser = get_parser()
 
     chain = initial_prompt | llm | parser
@@ -74,8 +66,6 @@ def extract_openai_metadata(document):
         result = chain.invoke(
             {
                 "page_content": document,
-                "schema_dublin_core": schema_dublin_core,
-                "schema": schema,
             }
         )
         print("\nParsed JSON Schema:")
