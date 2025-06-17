@@ -12,12 +12,12 @@ def extract_field(document, field_name):
     return document.get(field_name, None)
 
 
-def extract_entities(data_dir, csv_dir, output_dir):
+def extract_entities(data_dir, csv_dir, output_dir, json_file):
     # For each table row fill each schema object by extracting information using matching property keys
     # If values include separators (e.g., //) then split and create separate entities if it is not the full row entity class
     # For each table fill one schema that maintains the main structure as the original base schema
 
-    base_schema = read_json("data/schema/schema.json")
+    base_schema = read_json(json_file)
     table_documents = find_docs_in_folder(csv_dir, data_dir, cut_file=False)
 
     # List all types in order as per schema
@@ -71,4 +71,4 @@ def extract_entities(data_dir, csv_dir, output_dir):
                         "description": obj_schema["description"],
                         "properties": property_list,
                     }
-        save_json(f"{output_dir}{table_name}.json", filled_schema)
+        save_json(f"{output_dir}/{table_name}.json", filled_schema)

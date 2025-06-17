@@ -10,22 +10,38 @@ from typing import Optional
 
 def get_initial_template():
     initial_template = """
-    You get a metadata file and you have to decide if it is metadata for my samples or for my whole dataset/series.
+    You are given a document with metadata. Extract structured metadata as a **single valid JSON object**.
 
-    - If the metadata contains information on one or multiple samples in more detail, create an object with the key "sample" and include each key just once with one corresponding value
-    - If the metadata describes the dataset, create an object with the key "dataset" and include each key just once with one corresponding value
+    Respond with only one of the following:
+
+    Example for dataset:
+    {{
+    "dataset": {{
+        "identifier": "GSE123456",
+        "title": "...",
+        ...
+    }}
+    }}
+
+    Example for sample:
+    {{
+    "samples": {{
+        "identifier": "GSM123456",
+        "title": "...",
+        ...
+    }}
+    }}
+
+    Only return JSON. No comments, no explanation.
 
     Document:
     {page_content}
-
-    Ensure that the resulting JSON schema is valid and adheres to the structure outlined in the document.
     """
     return initial_template
 
 
 def get_parser():
     class DictSchema(BaseModel):
-        identifier: str
         contributor: Optional[str] = None
         coverage: Optional[str] = None
         creator: Optional[str] = None
@@ -54,7 +70,7 @@ def extract_metadata(document):
     initial_template = get_initial_template()
 
     initial_prompt = PromptTemplate(
-        input_variables=["page_content", "schema_dublin_core", "schema"],
+        input_variables=["page_content"],
         template=initial_template,
     )
 

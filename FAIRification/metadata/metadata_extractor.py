@@ -19,15 +19,23 @@ def extract_metadata(metadata_dir, data_dir, output_path):
         if response:
             try:
                 if response.get("dataset"):
+                    if isinstance(response.get("dataset"), list):
+                        data = response.get("dataset")[0]
+                    else:
+                        data = response.get("dataset")
                     save_json(
                         f"{output_path}/dataset_{dataset_counter}.json",
-                        response.get("dataset"),
+                        data,
                     )
                     dataset_counter += 1
-                elif response.get("sample"):
+                elif response.get("samples"):
+                    if isinstance(response.get("samples"), list):
+                        data = response.get("samples")[0]
+                    else:
+                        data = response.get("samples")
                     save_json(
                         f"{output_path}/sample_{sample_counter}.json",
-                        response.get("sample"),
+                        data,
                     )
                     sample_counter += 1
                 else:
