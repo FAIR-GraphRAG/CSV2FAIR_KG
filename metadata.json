@@ -1,0 +1,24 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CSV2FAIR_KG",
+  "version": "1.0.0",
+  "description": "A pipeline for converting biomedical tabular data into FAIR-compliant knowledge graphs using methods for FAIRification and graph construction.",
+  "identifier": "",
+  "license": "https://opensource.org/licenses/MIT",
+  "codeRepository": "",
+  "programmingLanguage": "Python",
+  "datePublished": "2025-06-17",
+  "applicationCategory": "Scientific data processing",
+  "keywords": [
+    "FAIR",
+    "knowledge graph construction",
+    "large language model"
+  ],
+  "creator": {
+    "@type": "Person",
+    "name": "Marlena Flüh",
+    "affiliation": "RWTH Aachen University",
+    "identifier": "https://orcid.org/0009-0008-6379-2988"
+  }
+}
