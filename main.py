@@ -11,19 +11,19 @@ from graph_DB.neo4j_json_client import insert_data
 from graph_DB.non_fair_neo4j_json_client import non_fair_insert_data
 from config.config import FAIR_GRAPH
 
-# input data
+# Input data
 DATA_DIR = "data/hepatic"
 CSV_DIR = "csv_data"
-# ontology
+# Ontology
 CSV_MATCHES = "data/ontology/ontology_matches.csv"
 CSV_SELECTIONS = "data/ontology/ontology_selections.csv"
-# schema
+# Schema
 ONTOLOGY_SCHEMA = "data/schema/ontology_schema.json"
 JSON_FILE = "data/schema/schema.json"
 INITIAL_SCHEMA = "data/schema/initial_schema.json"
 JSON_DIR = "data/extracted_data/filled_schema"
 JSON_GLOB = "data/extracted_data/filled_schema/*.json"
-# metadata
+# Metadata
 METADATA_INPUT = "metadata_PEP"
 METADATA_DIR = "data/extracted_data/metadata"
 METADATA_GLOB = "data/extracted_data/metadata/*.json"
