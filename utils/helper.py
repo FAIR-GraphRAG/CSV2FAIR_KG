@@ -6,7 +6,7 @@ import re
 
 def read_json(file_path):
     with open(file_path, "r", encoding="utf-8") as file:
-        data = json.load(file)  # data will be a Python dict
+        data = json.load(file)
     return data
 
 
@@ -37,11 +37,11 @@ def load_docs(report_folder, cut_file=True):
             file_path = os.path.join(report_folder, filename)
             loader = CSVLoader(file_path=file_path)
             data = loader.load()
-            if data:  # Make sure there's at least one row
+            if data:
                 if cut_file:
                     documents.append(data[0])  # Append the header + first row
                 else:
-                    documents.append(data)  # Append all rows
+                    documents.append(data)
         elif filename.endswith(".soft"):  # GEO soft file
             file_path = os.path.join(report_folder, filename)
             with open(file_path, "r") as file:
@@ -77,7 +77,7 @@ def extract_list(llm_output: str) -> list:
         list: Python list of keys, or [] if parsing fails
     """
     try:
-        # Find the first bracketed list using regex
+        # Find the first bracketed list
         match = re.search(r"\[.*?\]", llm_output, re.DOTALL)
         if match:
             return json.loads(match.group(0))

@@ -11,7 +11,6 @@ from langchain_azure_ai.chat_models import AzureAIChatCompletionsModel
 
 
 def get_openai_llm():
-    # Instantiate your LLM
     llm = AzureChatOpenAI(
         azure_deployment=DEPLOYMENT_NAME,
         azure_endpoint=AZURE_ENDPOINT,

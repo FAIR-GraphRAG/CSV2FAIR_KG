@@ -64,8 +64,8 @@ def upsert_node(tx, label, props):
     if not pid:
         return
 
-    # MERGE only on the generic label and pid,
-    # then attach the domain‑specific label in a *separate* SET.
+    # Merge only on the generic label and pid,
+    # then attach the domain‑specific label in a separate SET.
     tx.run(
         f"""
         MERGE (n:FAIR_Digital_Object {{ pid: $pid }})

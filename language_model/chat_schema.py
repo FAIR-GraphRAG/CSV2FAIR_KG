@@ -85,18 +85,16 @@ def get_refine_template():
 
 
 def create_schema(documents: List[Document]):
-    # Instantiate your LLM
+    
     if DEPLOYMENT_NAME == "Llama-3.3-70B-Instruct":
         llm = get_open_source_llm()
     else:
         llm = get_openai_llm()
 
-    # --- Load Initial Template ---
     with open("data/schema/initial_schema.json", "r") as f:
         initial_schema = json.load(f)
 
-    # --- Define the Initial Prompt ---
-    # This prompt generates the initial JSON schema from the first report.
+    # Define the Initial Prompt
     initial_template = get_initial_template()
 
     parser = get_parser()
@@ -117,8 +115,7 @@ def create_schema(documents: List[Document]):
     )
     initial_chain = LLMChain(llm=llm, prompt=initial_prompt)
 
-    # --- Define the Refine Prompt ---
-    # This prompt refines the existing JSON schema by adding new keys found in the report.
+    # Define the Refine Prompt
     refine_template = get_refine_template()
     refine_prompt = PromptTemplate(
         input_variables=["existing_schema", "page_content"],
@@ -132,11 +129,11 @@ def create_schema(documents: List[Document]):
     )
     refine_chain = LLMChain(llm=llm, prompt=refine_prompt)
 
-    # --- Create the RefineDocumentsChain ---
+    # Create the RefineDocumentsChain
     refine_documents_chain = RefineDocumentsChain(
         initial_llm_chain=initial_chain,
         refine_llm_chain=refine_chain,
-        # Now we use "page_content" as the variable since each Document has a "page_content" field.
+        # Now we use "page_content" as the variable since each document has a "page_content" field.
         document_prompt=PromptTemplate(
             input_variables=["page_content"], template="{page_content}"
         ),
@@ -144,13 +141,11 @@ def create_schema(documents: List[Document]):
         initial_response_name="existing_schema",
     )
 
-    # --- Run the Chain ---
     result = refine_documents_chain.invoke(documents)
 
     raw_output = result["output_text"]
     print("RAW", raw_output)
     json_text = postprocess(raw_output)
-    # Optionally, verify that the output is valid JSON
     try:
         refined_schema = json.loads(json_text)
         print("\nParsed JSON Schema:")

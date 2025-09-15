@@ -48,7 +48,7 @@ def extract_entities(data_dir, csv_dir, output_dir, json_file):
                                 v.strip() for v in val.split("//") if v.strip()
                             ]
                             for idx, split_val in enumerate(split_values):
-                                # key format: type_counter is 2 digits, e.g., GO-BP_00, GO-BP_01
+                                # Key format: type_counter is 2 digits, e.g., GO-BP_00, GO-BP_01
                                 key = f"{obj_type}_{type_counters[obj_type]:02d}"
                                 type_counters[obj_type] += 1
                                 filled_schema["properties"][key] = {

@@ -32,7 +32,7 @@ def create_schema(output_path, template_path):
 
     obj_template = initial_wrapper["initial_schema_object"]
 
-    # Ensure our base_schema has a top‐level "properties" dict
+    # Ensure the base_schema has a top‐level "properties" dict
     if "properties" not in base_schema or not isinstance(
         base_schema["properties"], dict
     ):
@@ -47,7 +47,7 @@ def create_schema(output_path, template_path):
         if entity in base_schema["properties"]:
             continue
 
-        # Make a deep copy of the template so we don’t overwrite the original
+        # Make a deep copy of the template
         new_obj = json.loads(json.dumps(obj_template))
 
         # Fill in "title" (capitalize the entity) and a generic description

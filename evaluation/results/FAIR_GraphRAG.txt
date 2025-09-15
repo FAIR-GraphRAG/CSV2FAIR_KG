@@ -1,6 +1,6 @@
-# gpt-4o-mini, FAIR GraphRAG (no answer == correct) 39/42 correct
-General Questions 21/22 correct
+# GPT-4o-mini, FAIR GraphRAG (empty answer field equals ground truth answer) 39/42 correct
 
+General Questions 21/22 correct
 What is the biotype of the gene TSPAN6?, protein_coding
 List the synonyms for the gene TNMD., BRICD4|CHM1L|TEM
 What is the fold change for the gene SCYL3?, 1.231
