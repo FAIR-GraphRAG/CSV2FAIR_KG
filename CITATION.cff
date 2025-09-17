@@ -1,12 +1,12 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it using the following metadata."
-title: "Table2FAIR_KG"
-version: "1.0.0"
+title: FAIR Knowledge Graph Construction
+message: "If you use this software, please cite it as below."
+type: software
 authors:
-  - family-names: "Flüh"
-    given-names: "Marlena"
+  - family-names: Flüh
+    given-names: Marlena
     affiliation: "RWTH Aachen University, Germany"
     orcid: "https://orcid.org/0009-0008-6379-2988"
 date-released: "2025-06-17"
-doi: "Todo"
-license: "MIT"
+repository-code: "https://github.com/FAIR-GraphRAG/CSV2FAIR_KG"
+license: MIT
