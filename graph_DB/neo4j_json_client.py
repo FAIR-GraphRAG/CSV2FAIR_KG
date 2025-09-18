@@ -141,5 +141,6 @@ def insert_data(json_glob, metadata_glob):
                         rel.get("similarity", ""),
                         rel.get("node2"),
                     )
+    print("Insert data into graph DB.")
 
     driver.close()

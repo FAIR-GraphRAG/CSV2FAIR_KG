@@ -8,8 +8,21 @@
 python3 -m venv venv-tab2g
 source venv-tab2g/bin/activate
 pip install --upgrade pip
+python3 -m textblob.download_corpora
 pip install -r requirements.txt
 ```
+
+## Data
+- Download data (.xlsx file) from (GEO)[https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE280797]
+- Download .soft file (Soft formatted family file(s)) from GEO page and extract file
+- Install converter (e.g., ssconvert from Gnumeric)
+  - MAC: `brew install gnumeric`
+  - Linux: `sudo apt install gnumeric`
+- Convert .xlsx to .csv file: `ssconvert GSE280797_Processed_data.xlsx GSE280797_Processed_data.csv`
+- Move GSE280797_Processed_data.csv into  `data/hepatic/csv_data`
+- Move GSE280797_family.soft into  `data/hepatic/metadata_PEP`
+- Delete first 40 rows (until CSV header) 
+- Crop first 81 rows for experiments
 
 ## Requirements and Access
 
@@ -18,6 +31,7 @@ To use this pipeline, ensure you have:
 - Azure OpenAI API access (for LLM-based enrichment)
 - BioOntology API access (for ontology annotation)
 - Neo4j Desktop or Aura (free version) for graph storage and visualization
+- Zenodo Sandbox access
 
 Create a `.env` file by copying and editing the provided `.env_dummy` file:
 
@@ -33,7 +47,7 @@ Edit settings in `config/config.py`:
 ```python
 DEPLOYMENT_NAME = "YOUR_MODEL_NAME"      # Set the deployed model name
 FAIR_GRAPH = True                        # Set to False for baseline GraphRAG
-ENTITY_CLASS_LIST = ["pathway"]          # Define biomedical entity classes
+ENTITY_CLASS_LIST = ["pathway", "GO-BP"]        # Define biomedical entity classes, set to "pathway" and "GO-BP" to reproduce experiments
 ```
 
 ## Running the Pipeline
@@ -55,7 +69,7 @@ Optimized for Gene Expression Omnibus (GEO) Series data:
 
 - Metadata (PEP):  
   `data/hepatic/GSE.../metadata_PEP/`  
-  (expects `_GSE.soft` and `_GSM.soft` files)
+  (expects `.soft` file)
 
 
 ## Citation
@@ -74,10 +88,8 @@ This project is licensed under the [MIT License](LICENSE). You are free to use, 
 
 - **Title:** CSV2FAIR_KG  
 - **Description:** A pipeline for converting biomedical tabular data into FAIR-compliant knowledge graphs using methods for FAIRification and graph construction.  
-- **Version:** 1.0.0  
-- **Release Date:** 2025-06-17  
+- **Version:** 1.0.0
 - **Keywords:** FAIR Principles, knowledge graph construction, large language model  
-- **Authors:**  
+- **Authors:**  Marlena Flüh
 - **Repository:** 
-- **License:** MIT  
-- **DOI:** 
+- **License:** MIT

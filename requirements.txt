@@ -19,4 +19,12 @@ uvicorn
 pydantic
 jinja2
 python-multipart
-langchian_azure_ai
+langchain_azure_ai
+dotenv
+shortuuid
+textblob
+
+langchain
+langchain_community
+langchain_core
+langcodes

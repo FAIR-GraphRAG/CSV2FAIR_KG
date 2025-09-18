@@ -10,7 +10,7 @@ __pycache__
 *.egg
 *.whl
 *.log
-/evaluation
+/evaluation/results/*.txt
 data/hepatic/*
 data/ontology/*
 data/schema/schema.json
@@ -18,7 +18,8 @@ data/extracted_data/filled_schema/*
 data/extracted_data/metadata/*
 
 # But include the folders themselves
-!data/hepatic/.gitkeep
+!data/hepatic/GSE280797/csv_data/.gitkeep
+!data/hepatic/GSE280797/metadata_PEP/.gitkeep
 !data/ontology/.gitkeep
 !data/extracted_data/filled_schema/.gitkeep
 !data/extracted_data/metadata/.gitkeep

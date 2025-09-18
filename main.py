@@ -26,7 +26,7 @@ JSON_GLOB = "data/extracted_data/filled_schema/*.json"
 # Metadata
 METADATA_INPUT = "metadata_PEP"
 METADATA_DIR = "data/extracted_data/metadata"
-METADATA_GLOB = "data/extracted_data/metadata/*.json"
+METADATA_GLOB = "data/extracted_data/metadata/extra/*.json"
 
 
 if __name__ == "__main__":
@@ -41,17 +41,17 @@ if __name__ == "__main__":
     if FAIR_GRAPH:
         create_schema(JSON_FILE, INITIAL_SCHEMA)
         extract_entities(DATA_DIR, CSV_DIR, JSON_DIR, JSON_FILE)
-        update_with_doi(METADATA_DIR, JSON_DIR)
         add_pid_to_json(JSON_DIR)
         add_ontology_mappings(
             JSON_FILE, CSV_MATCHES, CSV_SELECTIONS, ONTOLOGY_SCHEMA, JSON_DIR
         )
         extract_metadata(METADATA_INPUT, DATA_DIR, METADATA_DIR)
+        update_with_doi(METADATA_DIR, JSON_DIR)
         assign_metadata(JSON_DIR, METADATA_DIR)
         find_relations(JSON_DIR)
-        # insert_data(JSON_GLOB, METADATA_GLOB)
+        insert_data(JSON_GLOB, METADATA_GLOB)
     else:
         create_schema(METADATA_DIR, JSON_FILE)
-        extract_entities(DATA_DIR, CSV_DIR, JSON_DIR)
+        extract_entities(DATA_DIR, CSV_DIR, JSON_DIR, JSON_FILE)
         non_fair_find_relations(JSON_DIR)
-        # non_fair_insert_data(JSON_GLOB, METADATA_GLOB)
+        non_fair_insert_data(JSON_GLOB, METADATA_GLOB)
