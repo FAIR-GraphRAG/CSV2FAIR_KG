@@ -32,6 +32,20 @@ def get_initial_template():
     }}
     }}
 
+    Example for dataset and sample:
+    {{
+    "dataset": {{
+        "identifier": "GSE123456",
+        "title": "...",
+        ...
+    }},
+    "samples": {{
+        "identifier": "GSM123456",
+        "title": "...",
+        ...
+    }}
+    }}
+
     Only return JSON. No comments, no explanation.
 
     Document:

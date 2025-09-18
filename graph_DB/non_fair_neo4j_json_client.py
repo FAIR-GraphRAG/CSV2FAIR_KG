@@ -175,5 +175,6 @@ def non_fair_insert_data(json_glob, metadata_glob):
                     "",
                     doc_key,
                 )
+        print("Inserted into graph DB.")
 
     driver.close()

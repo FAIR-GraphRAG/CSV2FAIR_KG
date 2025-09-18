@@ -28,7 +28,7 @@ def extract_metadata(metadata_dir, data_dir, output_path):
                         data,
                     )
                     dataset_counter += 1
-                elif response.get("samples"):
+                if response.get("samples"):
                     if isinstance(response.get("samples"), list):
                         data = response.get("samples")[0]
                     else:
