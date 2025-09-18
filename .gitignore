@@ -11,12 +11,12 @@ __pycache__
 *.whl
 *.log
 /evaluation/results/*
-data/hepatic/GSE280797/csv_data/*.csv
-data/hepatic/GSE280797/metadata_PEP/*.soft
+data/hepatic/GSE280797/csv_data/*
+data/hepatic/GSE280797/metadata_PEP/*
 data/ontology/*
 data/schema/schema.json
 data/extracted_data/filled_schema/*
-data/extracted_data/metadata/*.json
+data/extracted_data/metadata/*
 
 # But include the folders themselves
 !data/ontology/.gitkeep
