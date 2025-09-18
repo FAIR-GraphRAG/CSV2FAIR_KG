@@ -10,7 +10,7 @@ __pycache__
 *.egg
 *.whl
 *.log
-/evaluation
+/evaluation/results/*
 data/hepatic/GSE280797/csv_data/*.csv
 data/hepatic/GSE280797/metadata_PEP/*.soft
 data/ontology/*
