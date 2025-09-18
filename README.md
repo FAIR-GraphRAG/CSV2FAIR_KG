@@ -1,6 +1,6 @@
 # CSV2FAIR_KG
 
-**CSV2FAIR_KG** transforms tabular data (CSV) into FAIR-compliant knowledge graphs for biomedical research. It integrates ontology mapping, metadata enrichment, and graph construction for semantic applications.
+**CSV2FAIR_KG** transforms tabular data (CSV) into a Findable, Accessible, Interoperable and Reusable (FAIR) knowledge graph (KG) for biomedical research. It integrates ontology mapping, metadata enrichment, Persistent Identifier (PID) assignment and graph construction for semantic applications.
 
 ## Environment Setup (Linux)
 
@@ -8,24 +8,23 @@
 python3 -m venv venv-tab2g
 source venv-tab2g/bin/activate
 pip install --upgrade pip
-python3 -m textblob.download_corpora
 pip install -r requirements.txt
+python3 -m textblob.download_corpora
 ```
 
 ## Data
-- Download data (.xlsx file) from (GEO)[https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE280797]
-- Download .soft file (Soft formatted family file(s)) from GEO page and extract file
 - Install converter (e.g., ssconvert from Gnumeric)
   - MAC: `brew install gnumeric`
   - Linux: `sudo apt install gnumeric`
+- Download dataset (.xlsx file) from (GEO)[https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE280797]
+- Download .soft file (Soft formatted family file(s)) from GEO page and extract file
 - Convert .xlsx to .csv file: `ssconvert GSE280797_Processed_data.xlsx GSE280797_Processed_data.csv`
-- Move GSE280797_Processed_data.csv into  `data/hepatic/csv_data`
-- Move GSE280797_family.soft into  `data/hepatic/metadata_PEP`
-- Delete first 40 rows (until CSV header) 
-- Crop first 81 rows for experiments
+- Move GSE280797_Processed_data.csv into folder `data/hepatic/csv_data/`
+- Move GSE280797_family.soft into folder `data/hepatic/metadata_PEP/`
+- Delete first 40 rows (until CSV header) of .csv file
+- Crop first 81 rows of .csv file for experiments
 
 ## Requirements and Access
-
 To use this pipeline, ensure you have:
 
 - Azure OpenAI API access (for LLM-based enrichment)
@@ -46,12 +45,11 @@ Edit settings in `config/config.py`:
 
 ```python
 DEPLOYMENT_NAME = "YOUR_MODEL_NAME"      # Set the deployed model name
-FAIR_GRAPH = True                        # Set to False for baseline GraphRAG
-ENTITY_CLASS_LIST = ["pathway", "GO-BP"]        # Define biomedical entity classes, set to "pathway" and "GO-BP" to reproduce experiments
+FAIR_GRAPH = True                        # Set to False for baseline (non-fair) GraphRAG
+ENTITY_CLASS_LIST = ["pathway", "GO-BP"] # Define biomedical entity classes, set to "pathway" and "GO-BP" to reproduce experiments
 ```
 
 ## Running the Pipeline
-
 Execute the main script:
 
 ```bash
@@ -61,8 +59,7 @@ python3 main.py
 After execution, visualize the generated graph in Neo4j Desktop or Aura.
 
 ## Data Structure
-
-Optimized for Gene Expression Omnibus (GEO) Series data:
+This project is optimized for Gene Expression Omnibus (GEO) Series data:
 
 - CSV tables:  
   `data/hepatic/GSE.../csv_data/`
@@ -88,8 +85,7 @@ This project is licensed under the [MIT License](LICENSE). You are free to use, 
 
 - **Title:** CSV2FAIR_KG  
 - **Description:** A pipeline for converting biomedical tabular data into FAIR-compliant knowledge graphs using methods for FAIRification and graph construction.  
-- **Version:** 1.0.0
 - **Keywords:** FAIR Principles, knowledge graph construction, large language model  
 - **Authors:**  Marlena Flüh
-- **Repository:** 
+- **Repository:** https://github.com/FAIR-GraphRAG/CSV2FAIR_KG
 - **License:** MIT
