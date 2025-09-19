@@ -14,6 +14,7 @@ __pycache__
 data/hepatic/GSE280797/csv_data/*
 data/hepatic/GSE280797/metadata_PEP/*
 data/ontology/*
+data/graph_snapshot/*
 data/schema/schema.json
 data/extracted_data/filled_schema/*
 data/extracted_data/metadata/*
