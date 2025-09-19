@@ -2,6 +2,8 @@
 
 **CSV2FAIR_KG** transforms tabular data (CSV) into a Findable, Accessible, Interoperable and Reusable (FAIR) knowledge graph (KG) for biomedical research. It integrates ontology mapping, metadata enrichment, Persistent Identifier (PID) assignment and graph construction for semantic applications.
 
+<img src="bloom-visualisation.png" alt="Knowledge Graph" width="700"/>
+
 ## Environment Setup (Linux)
 
 ```bash
